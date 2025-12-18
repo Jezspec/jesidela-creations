@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JESIDELA | Returns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], serif: ['Playfair Display', 'serif'] }, colors: { 'void': '#050505' } } } }
+    </script>
+    <style>body { background-color: #050505; color: #F5F5F0; cursor: crosshair; }</style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+    <nav class="fixed w-full z-50 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <span class="font-sans font-bold text-sm tracking-[0.2em] uppercase">Jesidela</span>
+            <a href="index.html" class="font-mono text-xs uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Return to Base</a>
+        </div>
+    </nav>
+    <section class="pt-40 pb-20 min-h-screen">
+        <div class="max-w-3xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-serif italic text-white mb-12">Exchange Protocol</h1>
+            <div class="prose prose-invert prose-sm font-mono text-gray-400">
+                <p class="mb-6">We stand by the integrity of our constructs. If a failure occurs, we will rectify it.</p>
+                
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">01 // Eligibility</h3>
+                <p>Items may be returned for exchange or credit within 7 days of receipt if they are defective or damaged upon arrival. The artifact must be unworn and in original packaging.</p>
+
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">02 // Initiation</h3>
+                <p>To initiate a return, transmit a message via the Contact page with your Order ID and photographic evidence of the defect.</p>
+
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">03 // Costs</h3>
+                <p>If the error is ours (incorrect item / defect), we cover the logistics cost. If you simply changed your mind, the return vector cost is on you.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

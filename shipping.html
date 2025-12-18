@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JESIDELA | Shipping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], serif: ['Playfair Display', 'serif'] }, colors: { 'void': '#050505' } } } }
+    </script>
+    <style>body { background-color: #050505; color: #F5F5F0; cursor: crosshair; }</style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+    <nav class="fixed w-full z-50 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <span class="font-sans font-bold text-sm tracking-[0.2em] uppercase">Jesidela</span>
+            <a href="index.html" class="font-mono text-xs uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Return to Base</a>
+        </div>
+    </nav>
+    <section class="pt-40 pb-20 min-h-screen">
+        <div class="max-w-3xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-serif italic text-white mb-12">Logistics & Dispatch</h1>
+            <div class="prose prose-invert prose-sm font-mono text-gray-400">
+                <p class="mb-6">Current dispatch vectors originate from Paarl / Cape Town, South Africa.</p>
+                
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">01 // Local Dispatch</h3>
+                <p>We utilize The Courier Guy or PostNet for all national deliveries. Standard delivery time is 2-4 business cycles (days) from dispatch.</p>
+
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">02 // Processing Time</h3>
+                <p>The Atelier requires 24-48 hours to prepare your artifact for transport. You will receive a tracking ID via email once the package enters the logistics stream.</p>
+
+                <h3 class="text-white text-xs uppercase tracking-widest mt-8 mb-4">03 // International</h3>
+                <p>Global shipping is handled on a case-by-case basis. Contact us directly to arrange a custom logistics quote.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

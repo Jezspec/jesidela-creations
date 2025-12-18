@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JESIDELA CREATIONS | Soul meets System</title>
+    <meta name="description" content="Jesidela Creations - Digital Studio, Creative Lab, and Boutique Shop.">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22black%22><rect width=%22100%22 height=%22100%22 fill=%22white%22 rx=%2220%22/><rect x=%2225%22 y=%2230%22 width=%2222%22 height=%2240%22><animate attributeName=%22y%22 values=%2230;20;30%22 dur=%222s%22 repeatCount=%22indefinite%22/></rect><rect x=%2253%22 y=%2220%22 width=%2218%22 height=%2260%22><animate attributeName=%22y%22 values=%2220;30;20%22 dur=%222s%22 repeatCount=%22indefinite%22/></rect></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'void': '#050505',
+                        'paper': '#F5F5F0',
+                        'gold': '#D4AF37', 
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    },
+                    animation: {
+                        'drift': 'drift 20s linear infinite',
+                        'slow-zoom': 'slowZoom 20s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        drift: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '50px 50px' },
+                        },
+                        slowZoom: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.15)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #050505;
+            color: #F5F5F0;
+            cursor: crosshair; 
+        }
+
+        a, button, input, select, textarea {
+            cursor: pointer;
+        }
+
+        .system-grid {
+            background-image: 
+                linear-gradient(to right, #1a1a1a 1px, transparent 1px),
+                linear-gradient(to bottom, #1a1a1a 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.2;
+        }
+
+        /* --- BUTTON STYLE: BACKLIT ONLY --- */
+        .btn-system {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: black;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .btn-system:hover {
+            background: black; 
+            color: white;
+            border-color: white;
+            transform: translateY(-4px); 
+            box-shadow: 
+                0 10px 20px -5px rgba(255, 255, 255, 0.3), 
+                0 0 15px rgba(255, 255, 255, 0.4);         
+        }
+
+        /* --- NAV & FOOTER LINKS: ILLUMINATING --- */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            color: white;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); 
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .vignette::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .art-preview {
+            filter: grayscale(100%) contrast(110%);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+        .group:hover .art-preview {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.02);
+        }
+    </style>
+
+    <script>
+        function handleImageError(img) {
+            const src = img.getAttribute('src');
+            if (img.getAttribute('data-retried') === 'true') {
+                img.style.display = 'none';
+                return;
+            }
+            img.setAttribute('data-retried', 'true');
+            if (src.includes('.jpg')) {
+                img.src = src.replace('.jpg', '.JPG');
+            } else if (src.includes('.JPG')) {
+                img.src = src.replace('.JPG', '.jpeg');
+            } else {
+                img.dispatchEvent(new Event('error'));
+            }
+        }
+    </script>
+</head>
+<body class="overflow-x-hidden antialiased selection:bg-white selection:text-black">
+
+    <div class="fixed inset-0 system-grid animate-drift pointer-events-none z-0"></div>
+
+    <nav class="fixed w-full z-50 bg-void/90 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <a href="#" class="flex items-center gap-2 group">
+                    <svg class="h-10 w-10 text-white transition-transform group-hover:rotate-180 duration-700" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="25" y="30" width="22" height="40" />
+                        <rect x="53" y="20" width="18" height="60" />
+                    </svg>
+                    <span class="font-sans font-bold text-sm tracking-[0.2em] uppercase leading-tight">Jesidela</span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-10 font-mono text-xs tracking-widest uppercase text-gray-400">
+                    <a href="#studio" class="nav-link">Studio</a>
+                    <a href="#atelier" class="nav-link">Atelier</a>
+                    <a href="#poc" class="nav-link">POC Hub</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="px-6 py-2 border border-white/20 text-white hover:bg-white hover:text-black transition-all">Contact</a>
+                </div>
+
+                <button class="md:hidden text-white"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-24 z-10 border-b border-white/5">
+        <div class="max-w-7xl w-full px-6 lg:px-8 text-center flex-grow flex flex-col justify-center">
+            
+            <div data-aos="fade-up" data-aos-duration="1200">
+                <h1 class="text-6xl md:text-9xl font-sans font-light tracking-tight mb-2 text-white">
+                    JESIDELA
+                </h1>
+                <h2 class="text-3xl md:text-6xl font-serif italic text-gray-400 mb-10 tracking-wide">
+                    Soul meets System.
+                </h2>
+
+                <p class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-12">
+                    Independent design house crafting digital artifacts
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-6 mb-24">
+                    <a href="#studio" class="btn-system px-10 py-4 text-xs font-bold uppercase tracking-[0.15em] whitespace-nowrap">
+                        <span>View Gallery</span>
+                    </a>
+                    <a href="#atelier" class="btn-system px-10 py-4 text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap">
+                        <span>Browse Atelier</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative w-full max-w-md mx-auto" data-aos="fade-up">
+                <div class="absolute -top-8 left-0 right-0 text-center">
+                    <span class="font-mono text-[9px] text-gray-500 uppercase tracking-widest border-b border-gray-800 pb-1">Latest Release</span>
+                </div>
+                <div class="relative aspect-video bg-gray-900 border border-white/10 p-1 group cursor-pointer overflow-hidden">
+                    <div class="relative w-full h-full overflow-hidden vignette">
+                        <img src="images/d.jpg" onerror="handleImageError(this)" alt="Featured Project" class="absolute inset-0 w-full h-full object-cover art-preview animate-slow-zoom">
+                        <div class="absolute inset-0 flex items-center justify-center z-20">
+                            <span class="text-white font-serif italic text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                                The Void Collection
+                            </span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-full p-4 flex justify-between items-end z-20 opacity-60 group-hover:opacity-100 transition-opacity">
+                            <span class="font-mono text-[9px] text-white">DROP_001</span>
+                            <span class="font-sans text-[9px] uppercase tracking-widest border-b border-white">View</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="studio" class="relative py-32 z-10 border-b border-white/5 bg-void">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+                <div>
+                    <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">01 // THE STUDIO</h3>
+                    <h2 class="text-4xl font-serif italic text-gray-200">Visual Synthesis</h2>
+                </div>
+                <a href="#contact" class="font-mono text-[10px] border-b border-gray-700 pb-1 hover:border-white hover:text-white text-gray-500 transition-colors uppercase tracking-wider">Start a Project</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+                <div class="group aspect-square bg-gray-900 relative overflow-hidden border border-white/5">
+                    <img src="images/b.jpg" onerror="handleImageError(this)" alt="Horizon" class="w-full h-full object-cover art-preview">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-center p-6 z-10">
+                        <span class="font-serif italic text-xl mb-1">Horizon Shift</span>
+                        <span class="font-mono text-[9px] text-gray-400 uppercase">Digital Print</span>
+                    </div>
+                </div>
+                <div class="group aspect-square bg-gray-900 relative overflow-hidden border border-white/5">
+                    <img src="images/k.jpg" onerror="handleImageError(this)" alt="Focus" class="w-full h-full object-cover art-preview">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-center p-6 z-10">
+                        <span class="font-serif italic text-xl mb-1">Micro Focus</span>
+                        <span class="font-mono text-[9px] text-gray-400 uppercase">Macro Study</span>
+                    </div>
+                </div>
+                <div class="group aspect-square bg-gray-900 relative overflow-hidden border border-white/5">
+                    <img src="images/e.jpg" onerror="handleImageError(this)" alt="Flow" class="w-full h-full object-cover art-preview">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-center p-6 z-10">
+                        <span class="font-serif italic text-xl mb-1">Process Flow</span>
+                        <span class="font-mono text-[9px] text-gray-400 uppercase">Landscape</span>
+                    </div>
+                </div>
+                <div class="group aspect-square bg-gray-900 relative overflow-hidden border border-white/5">
+                    <img src="images/h.jpg" onerror="handleImageError(this)" alt="Ladybug" class="w-full h-full object-cover art-preview">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-center p-6 z-10">
+                        <span class="font-serif italic text-xl mb-1">Organic Scale</span>
+                        <span class="font-mono text-[9px] text-gray-400 uppercase">Nature Study</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="atelier" class="relative py-32 z-10 border-b border-white/5 bg-[#0a0a0a]">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">02 // ATELIER</h3>
+                <h2 class="text-4xl md:text-5xl font-serif italic text-white">Boutique Atelier</h2>
+                <p class="font-mono text-[10px] text-gray-400 mt-4 tracking-widest uppercase">Forged • Limited Editions • Constructed</p>
+            </div>
+
+            <div class="flex justify-center gap-6 mb-12 font-mono text-xs uppercase text-gray-500">
+                <button class="text-white border-b border-white pb-1">Jewelry</button>
+                <button class="hover:text-white transition-colors">Prints</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <div class="group">
+                    <div class="aspect-[3/4] bg-gray-900 mb-6 overflow-hidden relative border border-white/5">
+                        <img src="images/1.jpg" onerror="handleImageError(this)" alt="Gilded Core" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-serif text-lg text-white leading-none">The Gilded Core</h4>
+                            <p class="font-mono text-[9px] text-gray-500 mt-1 uppercase">Gold-tone Heart Necklace</p>
+                        </div>
+                        <span class="font-mono text-xs text-gray-300">R 400</span>
+                    </div>
+                    <button class="w-full mt-4 py-3 btn-system text-[10px] font-mono uppercase tracking-widest">
+                        Add to Order
+                    </button>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-gray-900 mb-6 overflow-hidden relative border border-white/5">
+                        <img src="images/2.jpg" onerror="handleImageError(this)" alt="The Sentinel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-serif text-lg text-white leading-none">The Sentinel</h4>
+                            <p class="font-mono text-[9px] text-gray-500 mt-1 uppercase">Silver Cross Necklace</p>
+                        </div>
+                        <span class="font-mono text-xs text-gray-300">R 450</span>
+                    </div>
+                    <button class="w-full mt-4 py-3 btn-system text-[10px] font-mono uppercase tracking-widest">
+                        Add to Order
+                    </button>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-gray-900 mb-6 overflow-hidden relative border border-white/5">
+                        <img src="images/3.jpg" onerror="handleImageError(this)" alt="Monarch Construct" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-serif text-lg text-white leading-none">The Monarch Construct</h4>
+                            <p class="font-mono text-[9px] text-gray-500 mt-1 uppercase">Gold Butterfly Necklace</p>
+                        </div>
+                        <span class="font-mono text-xs text-gray-300">R 380</span>
+                    </div>
+                    <button class="w-full mt-4 py-3 btn-system text-[10px] font-mono uppercase tracking-widest">
+                        Add to Order
+                    </button>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-gray-900 mb-6 overflow-hidden relative border border-white/5">
+                        <img src="images/4.jpg" onerror="handleImageError(this)" alt="Industrial Link" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-serif text-lg text-white leading-none">Industrial Link</h4>
+                            <p class="font-mono text-[9px] text-gray-500 mt-1 uppercase">Silver Open Cross Bracelet</p>
+                        </div>
+                        <span class="font-mono text-xs text-gray-300">R 500</span>
+                    </div>
+                    <button class="w-full mt-4 py-3 btn-system text-[10px] font-mono uppercase tracking-widest">
+                        Add to Order
+                    </button>
+                </div>
+
+                <div class="group">
+                    <div class="aspect-[3/4] bg-gray-900 mb-6 overflow-hidden relative border border-white/5">
+                        <img src="images/5.jpg" onerror="handleImageError(this)" alt="Liquid Architecture" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-serif text-lg text-white leading-none">Liquid Architecture</h4>
+                            <p class="font-mono text-[9px] text-gray-500 mt-1 uppercase">Flat Snake Chain Bracelet</p>
+                        </div>
+                        <span class="font-mono text-xs text-gray-300">R 350</span>
+                    </div>
+                    <button class="w-full mt-4 py-3 btn-system text-[10px] font-mono uppercase tracking-widest">
+                        Add to Order
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="poc" class="relative py-32 z-10 border-b border-white/5 bg-void">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="mb-16">
+                <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">03 // POC HUB</h3>
+                <h2 class="text-4xl font-serif italic text-white">Hub — SKELMOS</h2>
+                <p class="font-mono text-xs text-gray-400 mt-6 max-w-xl leading-relaxed">
+                    Internal operating system concepts. Early modules, helper tools, and logic structures. Not for production.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 space-y-6">
+                    <div>
+                        <h4 class="text-sm font-bold font-sans text-white mb-2 uppercase tracking-wide">System Overview</h4>
+                        <p class="text-gray-500 font-mono text-[10px] leading-relaxed">
+                            SKELMOS is a collection of logic prototypes. It exists to document the evolution of our architectural skills.
+                        </p>
+                    </div>
+                    <div class="h-px bg-white/10 w-full"></div>
+                    <ul class="space-y-4 font-mono text-[10px] text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <div class="w-1.5 h-1.5 bg-gold rounded-full"></div>
+                            Crypto Utility (Prototype)
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-1.5 h-1.5 bg-gray-700 rounded-full"></div>
+                            UI Logic Modules
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel p-8 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-sm font-bold font-sans text-white mb-2 uppercase tracking-wide">Status</h4>
+                        <p class="text-gray-500 font-mono text-[10px] leading-relaxed mb-6">
+                            Experimental environment. Access restricted to internal development.
+                        </p>
+                    </div>
+                    <a href="skelmos.html" class="block w-full py-3 btn-system text-center text-[10px] font-mono uppercase tracking-widest">
+                        Enter Environment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="relative py-32 z-10 border-b border-white/5 bg-[#0a0a0a]">
+        <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-serif italic mb-10 text-gray-200">Where Soul Meets System</h2>
+            <div class="prose prose-invert prose-sm mx-auto text-left md:text-center">
+                <p class="font-sans font-light text-gray-400 leading-relaxed mb-8">
+                    Jesidela Creations is a creative engineering studio rooted in human insight, emotional realism, and functional design. We build with intention, refine with precision, and lay the groundwork for work that endures.
+                </p>
+            </div>
+            <div class="mt-12 pt-12 border-t border-white/10 flex justify-center gap-12 font-mono text-[9px] tracking-[0.2em] text-gray-600 uppercase">
+                <span>Cape Town, ZA</span>
+                <span>Arch: Jez & Frikkie</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="relative py-32 z-10 bg-void">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div>
+                <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">04 // CONNECT</h3>
+                <h2 class="text-4xl font-serif italic text-white mb-8">Initiate Protocol</h2>
+                <div class="space-y-6 font-mono text-xs">
+                    <a href="mailto:info@jesidela.co.za" class="block text-gray-400 hover:text-white transition-colors">
+                        info@jesidela.co.za
+                    </a>
+                    <div class="text-gray-600">
+                        Cape Town, South Africa
+                    </div>
+                </div>
+            </div>
+
+            <form name="jesidela-contact" method="POST" data-netlify="true" class="space-y-6">
+                <div class="space-y-2">
+                    <label class="font-mono text-[9px] uppercase text-gray-600 tracking-widest">Identity</label>
+                    <input type="text" name="name" class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs focus:outline-none focus:border-white transition-colors placeholder-gray-700" placeholder="NAME" required>
+                </div>
+                <div class="space-y-2">
+                    <label class="font-mono text-[9px] uppercase text-gray-600 tracking-widest">Transmission</label>
+                    <textarea name="message" rows="4" class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs focus:outline-none focus:border-white transition-colors placeholder-gray-700" placeholder="MESSAGE..." required></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 btn-system font-bold font-mono text-[10px] uppercase tracking-[0.2em]">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col items-center md:items-start">
+                <span class="font-bold text-xs text-white uppercase tracking-widest">JESIDELA CREATIONS</span>
+                <span class="font-mono text-[9px] text-gray-600 uppercase tracking-widest mt-1">© 2025 All Rights Reserved.</span>
+            </div>
+            
+            <div class="flex gap-6 font-mono text-[9px] text-gray-500 uppercase tracking-widest">
+                <a href="terms.html" class="nav-link">Terms</a>
+                <a href="privacy.html" class="nav-link">Privacy</a>
+                <a href="shipping.html" class="nav-link">Shipping</a>
+                <a href="returns.html" class="nav-link">Exchange Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        lucide.createIcons();
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    </script>
+</body>
+</html>

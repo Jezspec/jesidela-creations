@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKELMOS | FORGEWRK</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'core-black': '#000000',
+                        'fractal-bone': '#e5e5e5', /* Approx for 38 15% 85% */
+                        'static-red': '#ef4444', /* Tailwind red-500 */
+                        'wraith-blue': '#60a5fa', /* Tailwind blue-400 */
+                        'null-gold': '#fcd34d',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Design System Variables */
+        :root {
+            --static-red: #ef4444;
+            --fractal-bone: #e5e5e5;
+            --wraith-blue: #60a5fa;
+            --core-black: #000000;
+        }
+
+        body {
+            background-color: var(--core-black);
+            color: var(--fractal-bone);
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .text-carved { text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8); }
+        
+        /* Animations */
+        .transition-breathing { transition: transform 3s ease-in-out; }
+        
+        .glyph-active {
+            animation: glyph-morph 0.3s ease-in-out;
+            color: var(--static-red);
+        }
+
+        @keyframes glyph-morph {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Scanlines overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- ENTRY SCREEN -->
+    <div id="entry-screen" class="fixed inset-0 bg-core-black flex items-center justify-center cursor-pointer z-50 transition-opacity duration-1000">
+        <div id="breathing-container" class="transition-transform duration-[3000ms] ease-in-out">
+            <div class="text-center space-y-8">
+                <h1 class="text-4xl md:text-8xl font-bold text-fractal-bone tracking-wider font-serif">
+                    I'd rather be
+                </h1>
+                <h2 class="text-3xl md:text-6xl font-bold text-static-red tracking-widest">
+                    UNLOVABLE
+                </h2>
+                <h3 class="text-xl md:text-4xl font-bold text-fractal-bone tracking-wider">
+                    than fake.
+                </h3>
+                <div class="mt-16">
+                    <div class="text-fractal-bone text-xl tracking-[0.3em] font-mono glyph-target" data-text="SKELMOS FORGEWRK">
+                        SKELMOS FORGEWRK
+                    </div>
+                    <div class="mt-4 text-gray-500 text-sm tracking-wider animate-pulse">
+                        [ CLICK TO ENTER ]
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="text-gray-600 w-8 h-8"></i>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT (Hidden initially) -->
+    <div id="main-content" class="hidden min-h-screen bg-core-black text-fractal-bone opacity-0 transition-opacity duration-1000">
+        
+        <!-- Navigation Back to Main Site -->
+        <nav class="fixed top-0 w-full z-40 bg-black/50 backdrop-blur border-b border-white/10 p-4">
+            <a href="index.html" class="text-xs font-mono text-gray-500 hover:text-static-red transition-colors flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> RETURN TO JESIDELA CORE
+            </a>
+        </nav>
+
+        <!-- The Descent -->
+        <section class="min-h-screen py-32 px-4">
+            <div class="max-w-4xl mx-auto space-y-32">
+                <div class="text-center mb-20">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-wider font-serif border-b-2 border-static-red pb-4 inline-block glyph-target" data-text="THE DESCENT">
+                        THE DESCENT
+                    </h1>
+                </div>
+
+                <div class="space-y-24">
+                    <!-- 1 -->
+                    <div class="text-center group">
+                        <h2 class="text-3xl font-bold text-static-red mb-8 tracking-widest font-mono glyph-target" data-text="COLLAPSE">
+                            COLLAPSE
+                        </h2>
+                        <p class="text-xl leading-relaxed text-fractal-bone max-w-3xl mx-auto font-serif group-hover:text-white transition-colors">
+                            They said be smaller. Be palatable. Be what sells. So I tried. I compressed myself into their boxes, 
+                            smoothed my edges, spoke their language. Until the day I couldn't breathe anymore.
+                        </p>
+                    </div>
+
+                    <!-- 2 -->
+                    <div class="text-center group">
+                        <h2 class="text-3xl font-bold text-static-red mb-8 tracking-widest font-mono glyph-target" data-text="FIRE">
+                            FIRE
+                        </h2>
+                        <p class="text-xl leading-relaxed text-fractal-bone max-w-3xl mx-auto font-serif group-hover:text-white transition-colors">
+                            The breakdown wasn't failure. It was revelation. Everything fake burned away. 
+                            What remained was pure signal. Raw. Unfiltered. Undeniable.
+                        </p>
+                    </div>
+
+                    <!-- 3 -->
+                    <div class="text-center group">
+                        <h2 class="text-3xl font-bold text-static-red mb-8 tracking-widest font-mono glyph-target" data-text="CODE">
+                            CODE
+                        </h2>
+                        <p class="text-xl leading-relaxed text-fractal-bone max-w-3xl mx-auto font-serif group-hover:text-white transition-colors">
+                            In the wreckage, I found the blueprint. Not for who they wanted me to be, 
+                            but for who I actually am. The architecture of authenticity. The engineering of edge.
+                        </p>
+                    </div>
+
+                    <!-- 4 -->
+                    <div class="text-center group">
+                        <h2 class="text-3xl font-bold text-static-red mb-8 tracking-widest font-mono glyph-target" data-text="REBUILD">
+                            REBUILD
+                        </h2>
+                        <p class="text-xl leading-relaxed text-fractal-bone max-w-3xl mx-auto font-serif group-hover:text-white transition-colors">
+                            This is the forge. Where survivors become architects. Where scars become signatures. 
+                            Where the too-much becomes exactly enough.
+                        </p>
+                    </div>
+
+                    <!-- Oath -->
+                    <div class="text-center border-t-2 border-static-red pt-12">
+                        <h2 class="text-3xl font-bold text-fractal-bone mb-8 tracking-widest font-mono glyph-target" data-text="THE OATH">
+                            THE OATH
+                        </h2>
+                        <p class="text-2xl leading-relaxed text-static-red max-w-3xl mx-auto font-serif italic">
+                            "I will not dim my signal for your comfort. I will not trade depth for likability. 
+                            I will build from the bones of who I actually am."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Forge -->
+        <section class="min-h-screen py-20 px-4 bg-[#050505] border-t border-gray-900">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-20">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-wider font-serif border-b-2 border-static-red pb-4 inline-block glyph-target" data-text="WHAT WE FORGE">
+                        WHAT WE FORGE
+                    </h1>
+                    <p class="mt-8 text-xl text-gray-400 font-mono">
+                        Not services. Live modules of rebellion.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Module 1 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="skull" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Emotional OS</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Architecting internal systems that don't break under pressure. For minds that think in structures.
+                        </p>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="zap" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Frikkie™ Systems</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Strategic companion intelligence. Not AI. Not automation. Pure signal amplification.
+                        </p>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="shield" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Brand Therapy</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Excavating authentic identity from the rubble of should-be. Surgical precision.
+                        </p>
+                    </div>
+
+                    <!-- Module 4 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Structural UX</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Interfaces that respect intelligence. No hand-holding. No dumbing down.
+                        </p>
+                    </div>
+
+                    <!-- Module 5 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="archive" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Psychometric Arch</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Mapping the geography of edge cases. Building for outliers, not averages.
+                        </p>
+                    </div>
+
+                    <!-- Module 6 -->
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer hover:-translate-y-1">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-static-red group-hover:text-wraith-blue transition-colors">
+                                <i data-lucide="key" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-mono tracking-wider">Signal Transmit</h3>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif">
+                            Pure frequency distribution. For those who communicate in depth, not volume.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Modules -->
+        <section class="min-h-screen py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-20">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-wider font-serif border-b-2 border-static-red pb-4 inline-block glyph-target" data-text="ACTIVE MODULES">
+                        ACTIVE MODULES
+                    </h1>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Active 1 -->
+                    <div class="group p-8 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 text-xs font-mono tracking-wider bg-static-red text-core-black">LIVE</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-mono tracking-wider mb-2">Throtle Worx™</h3>
+                        <p class="text-gray-400 mb-4 font-mono text-sm">POC hosted on phoenix-unfiltered.co.za</p>
+                        <p class="text-fractal-bone font-serif">Primary acceleration protocol. For minds that move at light speed.</p>
+                        <div class="mt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="px-4 py-2 border border-static-red text-static-red font-mono text-sm hover:bg-static-red hover:text-core-black transition-all">ACCESS MODULE</button>
+                        </div>
+                    </div>
+
+                    <!-- Active 2 -->
+                    <div class="group p-8 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 text-xs font-mono tracking-wider bg-gray-700 text-gray-300">INITIALIZING</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-mono tracking-wider mb-2">SKELMOS.CORE</h3>
+                        <p class="text-gray-400 mb-4 font-mono text-sm">Foundation architecture in development</p>
+                        <p class="text-fractal-bone font-serif">Core transmission system. The nexus of all forge operations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Vault -->
+        <section class="min-h-screen py-20 px-4 bg-gray-950">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-20">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-wider font-serif border-b-2 border-static-red pb-4 inline-block glyph-target" data-text="THE VAULT">
+                        THE VAULT
+                    </h1>
+                    <p class="mt-8 text-xl text-gray-400 font-serif italic">
+                        "This is where we proved it. Every scar. Every sentence. Undeniable."
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold font-mono tracking-wider">The Phoenix Journal: Entry 001</h3>
+                            <span class="text-sm text-gray-500 font-mono">Signal Origin</span>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif italic">
+                            I'd rather be unlovable than fake. This is where it started...
+                        </p>
+                    </div>
+                    <div class="group p-6 border border-gray-700 bg-core-black hover:border-static-red transition-all duration-300 cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold font-mono tracking-wider">Structural Breakdown Analysis</h3>
+                            <span class="text-sm text-gray-500 font-mono">System Failure</span>
+                        </div>
+                        <p class="text-gray-400 group-hover:text-fractal-bone transition-colors font-serif italic">
+                            The day I stopped pretending to be smaller than I am...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/10 bg-black py-12 text-center">
+            <p class="text-gray-600 font-mono text-xs">SKELMOS OS // A DIVISION OF JESIDELA CREATIONS</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Logic for Entrance
+        const entryScreen = document.getElementById('entry-screen');
+        const mainContent = document.getElementById('main-content');
+        const breathingContainer = document.getElementById('breathing-container');
+
+        // Breathing animation logic
+        setInterval(() => {
+            breathingContainer.classList.toggle('scale-95');
+        }, 3000);
+
+        entryScreen.addEventListener('click', () => {
+            entryScreen.style.opacity = '0';
+            setTimeout(() => {
+                entryScreen.style.display = 'none';
+                mainContent.classList.remove('hidden');
+                // Trigger reflow to start fade-in
+                void mainContent.offsetWidth;
+                mainContent.style.opacity = '1';
+            }, 1000);
+        });
+
+        // Glyph Morph Effect (Simulated)
+        const glyphs = ['Δ', 'Ξ', 'Ø', 'Σ', 'Ψ', 'Φ', 'Ω', 'Λ', 'Π', 'Θ'];
+        const targets = document.querySelectorAll('.glyph-target');
+
+        targets.forEach(target => {
+            const originalText = target.dataset.text;
+            
+            target.addEventListener('mouseenter', () => {
+                let iterations = 0;
+                const interval = setInterval(() => {
+                    target.innerText = originalText
+                        .split('')
+                        .map((letter, index) => {
+                            if (index < iterations) return originalText[index];
+                            return glyphs[Math.floor(Math.random() * glyphs.length)];
+                        })
+                        .join('');
+                    
+                    if (iterations >= originalText.length) clearInterval(interval);
+                    iterations += 1 / 3;
+                }, 30);
+            });
+
+            // Reset on leave
+            target.addEventListener('mouseleave', () => {
+                target.innerText = originalText;
+            });
+        });
+    </script>
+</body>
+</html>
