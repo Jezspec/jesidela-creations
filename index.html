@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JESIDELA CREATIONS | Soul meets System</title>
     
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,17 +22,16 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* NAVIGATION GLASS */
+        /* LOGO FIX */
         .glass-nav { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        
-        /* BUTTONS */
         .btn-system { border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .btn-system:hover { background: white; color: black; border-color: white; }
-        
-        /* IMAGE HOVER EFFECTS */
         .art-preview { filter: grayscale(100%) contrast(110%); transition: all 0.7s ease; }
         .group:hover .art-preview { filter: grayscale(0%) contrast(100%); transform: scale(1.05); }
         .vignette::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8)); pointer-events: none; }
+        
+        /* CURSOR POINTER FOR THUMBNAILS */
+        .thumb-active { border-color: white !important; opacity: 1 !important; }
     </style>
 </head>
 <body class="antialiased selection:bg-white selection:text-black">
@@ -38,10 +39,16 @@
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
+                
                 <a href="#" class="group flex items-center gap-3">
-                    <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xs tracking-tighter">JC</div>
-                    <span class="font-mono text-xs tracking-[0.2em] group-hover:text-gray-400 transition-colors">JESIDELA</span>
+                    <svg class="w-8 h-8 border border-white/30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" fill="black"/>
+                        <path d="M40 30 V65 C40 75 35 75 30 72" stroke="white" stroke-width="6" stroke-linecap="square"/>
+                        <path d="M80 30 C65 30 55 40 55 52 C55 64 65 74 80 74" stroke="white" stroke-width="6" stroke-linecap="square"/>
+                    </svg>
+                    <span class="font-sans font-semibold text-[10px] tracking-[0.2em] text-gray-400 group-hover:text-white transition-colors">JESIDELA CREATIONS</span>
                 </a>
+
                 <div class="hidden md:flex items-center gap-8 font-mono text-[10px] uppercase tracking-widest">
                     <a href="#studio" class="hover:text-gray-400">Studio</a>
                     <a href="#atelier" class="hover:text-gray-400">Atelier</a>
@@ -81,11 +88,9 @@
                 
                 <a href="https://no-bullshit-e1046.web.app" target="_blank" class="block relative h-[500px] bg-gray-900 border border-white/10 p-1 group cursor-pointer overflow-hidden">
                     <div class="relative w-full h-full overflow-hidden vignette">
-                        
                         <img src="images/nobs.png" 
                              onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80'" 
                              class="absolute inset-0 w-full h-full object-contain bg-black art-preview opacity-90 group-hover:opacity-100 transition-opacity duration-500">
-                        
                         <div class="absolute bottom-0 left-0 w-full p-4 flex justify-between items-end z-20 opacity-80 group-hover:opacity-100 transition-opacity">
                             <span class="font-mono text-[9px] text-green-400 bg-black/50 px-2">STATUS: ONLINE</span>
                             <span class="font-sans text-[9px] text-white uppercase tracking-widest border-b border-white bg-black/50 px-2">Launch App</span>
@@ -108,72 +113,91 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-                
                 <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up">
                     <img src="images/d.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="font-mono text-[9px] bg-black text-white px-3 py-1">THE VOID</span>
                     </div>
                 </div>
-
                 <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <img src="images/b.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_B</span>
                     </div>
                 </div>
-
                 <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <img src="images/e.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_E</span>
                     </div>
                 </div>
-
                 <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up">
                     <img src="images/h.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_H</span>
                     </div>
                 </div>
-
                 <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <img src="images/k.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
                     <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_K</span>
                     </div>
                 </div>
-
                 <div class="aspect-square bg-black border border-white/5 relative group overflow-hidden flex flex-col items-center justify-center text-center p-6" data-aos="fade-up" data-aos-delay="200">
                     <h4 class="font-serif italic text-2xl text-gray-600 mb-2">The Archive</h4>
                     <span class="font-mono text-[9px] text-gray-500 uppercase tracking-widest">More Coming Soon</span>
                 </div>
-
             </div>
         </div>
     </section>
 
     <section id="atelier" class="py-32 border-b border-white/5 bg-[#080808]">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row gap-16 items-center">
+            <div class="flex flex-col md:flex-row gap-16 items-start">
+                
                 <div class="w-full md:w-1/2" data-aos="fade-right">
-                    <div class="relative aspect-[3/4] bg-black border border-white/10 p-4">
-                        <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-500">ITEM: NECKLACE_01</div>
-                        <img src="images/necklace.jpg" onerror="this.src='https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    
+                    <div class="relative aspect-[3/4] bg-black border border-white/10 p-4 mb-4">
+                        <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-500">ITEM: <span id="product-id">JC_001</span></div>
+                        <img id="main-product-image" src="images/1.jpg" onerror="this.src='https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    
+                    <div class="grid grid-cols-5 gap-2">
+                         <img src="images/1.jpg" onclick="swapProduct('1', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer thumb-active">
+                         <img src="images/2.jpg" onclick="swapProduct('2', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/3.jpg" onclick="swapProduct('3', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/4.jpg" onclick="swapProduct('4', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/5.jpg" onclick="swapProduct('5', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
                     </div>
                 </div>
+                
                 <div class="w-full md:w-1/2 space-y-8" data-aos="fade-left">
                     <div>
                         <h3 class="font-mono text-[10px] text-amber-500 tracking-widest mb-3">02 // ATELIER</h3>
-                        <h2 class="text-5xl font-serif italic text-white mb-4">The Gilded Core</h2>
-                        <p class="text-gray-400 font-light leading-relaxed max-w-md">Hand-forged resin and gold leaf. A study in trapped light. Each piece is a unique artifact, suspended in time.</p>
+                        <h2 id="product-title" class="text-5xl font-serif italic text-white mb-4">The Silver Vow</h2>
+                        <p id="product-desc" class="text-gray-400 font-light leading-relaxed max-w-md">
+                            High-polish herringbone chain with a minimal cross pendant. A statement of faith and structure.
+                        </p>
                     </div>
+
                     <div class="space-y-4 border-t border-white/10 pt-8">
-                        <div class="flex justify-between font-mono text-xs"><span class="text-gray-500">MATERIAL</span><span class="text-white">EPOXY / GOLD LEAF</span></div>
-                        <div class="flex justify-between font-mono text-xs"><span class="text-gray-500">EDITION</span><span class="text-white">1 OF 1</span></div>
-                        <div class="flex justify-between font-mono text-xs"><span class="text-gray-500">PRICE</span><span class="text-white">R 450.00</span></div>
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">MATERIAL</span>
+                            <span id="product-material" class="text-white">STAINLESS STEEL</span>
+                        </div>
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">EDITION</span>
+                            <span class="text-white">OPEN EDITION</span>
+                        </div>
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">PRICE</span>
+                            <span id="product-price" class="text-white">R 350.00</span>
+                        </div>
                     </div>
-                    <a href="#contact" class="inline-block btn-system px-12 py-4 text-xs font-bold uppercase tracking-[0.2em] mt-8">Acquire Artifact</a>
+
+                    <a href="#contact" class="inline-block btn-system px-12 py-4 text-xs font-bold uppercase tracking-[0.2em] mt-8">
+                        Acquire Artifact
+                    </a>
                 </div>
             </div>
         </div>
@@ -221,6 +245,65 @@
     <script>
         lucide.createIcons();
         AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // --- PRODUCT DATABASE (EDIT THESE DETAILS AS NEEDED) ---
+        const products = {
+            '1': {
+                title: "The Silver Vow",
+                desc: "High-polish herringbone chain with a minimal cross pendant. A statement of faith and structure.",
+                material: "STAINLESS STEEL",
+                price: "R 350.00"
+            },
+            '2': {
+                title: "The Golden Serpent",
+                desc: "Classic link chain with a gilded finish. Fluid movement and heavy impact.",
+                material: "18K GOLD PLATED",
+                price: "R 450.00"
+            },
+            '3': {
+                title: "The Midnight Link",
+                desc: "Darkened steel links. A study in contrast and industrial aesthetics.",
+                material: "BLACKENED STEEL",
+                price: "R 400.00"
+            },
+            '4': {
+                title: "The Dual Chain",
+                desc: "A layered approach. Two textures, one cohesive artifact.",
+                material: "STAINLESS STEEL",
+                price: "R 550.00"
+            },
+            '5': {
+                title: "The Sovereign",
+                desc: "Heavyweight pendant on a box chain. Commanding and absolute.",
+                material: "STAINLESS STEEL",
+                price: "R 600.00"
+            }
+        };
+
+        // IMAGE & TEXT SWAPPER
+        function swapProduct(id, element) {
+            // 1. Swap Image
+            document.getElementById('main-product-image').src = 'images/' + id + '.jpg';
+            document.getElementById('product-id').innerText = 'JC_00' + id;
+
+            // 2. Swap Text Details (From Database above)
+            const data = products[id];
+            if (data) {
+                document.getElementById('product-title').innerText = data.title;
+                document.getElementById('product-desc').innerText = data.desc;
+                document.getElementById('product-material').innerText = data.material;
+                document.getElementById('product-price').innerText = data.price;
+            }
+            
+            // 3. Update Thumbnails (Active State)
+            const thumbs = document.querySelectorAll('#atelier .grid img');
+            thumbs.forEach(img => {
+                img.classList.remove('thumb-active');
+                img.classList.add('opacity-60');
+            });
+            element.classList.remove('opacity-60');
+            element.classList.add('thumb-active');
+        }
     </script>
 </body>
 </html>
