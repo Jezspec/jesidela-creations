@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JESIDELA CREATIONS | Soul meets System</title>
     
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><path d='M40 30 V65 C40 75 35 75 30 72' stroke='white' stroke-width='6' fill='none' stroke-linecap='square'/><path d='M80 30 C65 30 55 40 55 52 C55 64 65 74 80 74' stroke='white' stroke-width='6' fill='none' stroke-linecap='square'/></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -22,7 +22,6 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* LOGO FIX */
         .glass-nav { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .btn-system { border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .btn-system:hover { background: white; color: black; border-color: white; }
@@ -174,9 +173,9 @@
                 <div class="w-full md:w-1/2 space-y-8" data-aos="fade-left">
                     <div>
                         <h3 class="font-mono text-[10px] text-amber-500 tracking-widest mb-3">02 // ATELIER</h3>
-                        <h2 id="product-title" class="text-5xl font-serif italic text-white mb-4">The Silver Vow</h2>
+                        <h2 id="product-title" class="text-5xl font-serif italic text-white mb-4">The Silver Heart</h2>
                         <p id="product-desc" class="text-gray-400 font-light leading-relaxed max-w-md">
-                            High-polish herringbone chain with a minimal cross pendant. A statement of faith and structure.
+                            Polished stainless steel heart pendant on a delicate chain. A symbol of enduring affection.
                         </p>
                     </div>
 
@@ -246,35 +245,35 @@
         lucide.createIcons();
         AOS.init({ duration: 1000, once: true, offset: 50 });
 
-        // --- PRODUCT DATABASE (EDIT THESE DETAILS AS NEEDED) ---
+        // --- PRODUCT DATABASE (FIXED DESCRIPTIONS) ---
         const products = {
             '1': {
-                title: "The Silver Vow",
-                desc: "High-polish herringbone chain with a minimal cross pendant. A statement of faith and structure.",
+                title: "The Silver Heart",
+                desc: "Polished stainless steel heart pendant on a delicate chain. A symbol of enduring affection.",
                 material: "STAINLESS STEEL",
                 price: "R 350.00"
             },
             '2': {
-                title: "The Golden Serpent",
-                desc: "Classic link chain with a gilded finish. Fluid movement and heavy impact.",
-                material: "18K GOLD PLATED",
+                title: "The Silver Cross",
+                desc: "Classic flat snake chain with a minimal cross pendant. Sleek, holy, and structured.",
+                material: "STAINLESS STEEL",
                 price: "R 450.00"
             },
             '3': {
-                title: "The Midnight Link",
-                desc: "Darkened steel links. A study in contrast and industrial aesthetics.",
-                material: "BLACKENED STEEL",
+                title: "The Crystal Butterfly",
+                desc: "Delicate chain featuring a crystal-encrusted butterfly. Light, transformation, and detail.",
+                material: "ZINC ALLOY / CRYSTAL",
                 price: "R 400.00"
             },
             '4': {
-                title: "The Dual Chain",
-                desc: "A layered approach. Two textures, one cohesive artifact.",
+                title: "The Paperclip Link",
+                desc: "Modern open-link paperclip chain. Industrial minimalism at its finest.",
                 material: "STAINLESS STEEL",
                 price: "R 550.00"
             },
             '5': {
-                title: "The Sovereign",
-                desc: "Heavyweight pendant on a box chain. Commanding and absolute.",
+                title: "The Herringbone",
+                desc: "Fluid, flat snake chain (Herringbone). Liquid metal texture that sits flush against the skin.",
                 material: "STAINLESS STEEL",
                 price: "R 600.00"
             }
