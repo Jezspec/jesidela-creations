@@ -2,92 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JESIDELA | Identity Chips</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <title>JESIDELA | Team Identity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #050505; color: #F5F5F0; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; min-height: 100vh; padding: 50px; }
+        body { 
+            background-color: #050505; 
+            color: #F5F5F0; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 60px; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            font-family: sans-serif; 
+        }
+
         .card { text-align: center; }
-        .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #666; margin-top: 15px; letter-spacing: 0.2em; text-transform: uppercase; }
         
-        /* The Avatar Container */
+        .label { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 12px; 
+            color: #666; 
+            margin-top: 20px; 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+        }
+        
+        /* The Circle Container */
         .avatar {
-            width: 200px;
-            height: 200px;
+            width: 200px; 
+            height: 200px; 
             background: #000;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50%; /* Make it circular for standard profile pics */
-            display: flex;
-            align-items: center;
+            border: 1px solid rgba(255,255,255,0.15); 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 40px -10px black;
         }
 
-        /* 1. JEZ - The Founder (Monogram) */
-        .jez-font { font-family: 'Playfair Display', serif; font-style: italic; font-size: 80px; color: #fff; }
+        /* FRIKKIE STYLE (Matches Jez) */
+        .monogram { 
+            font-family: 'Playfair Display', serif; 
+            font-style: italic; 
+            font-size: 80px; 
+            color: #fff; 
+            padding-right: 5px; /* Visual centering adjustment */
+        }
         
-        /* 2. STUDIO - The Brand (The Pistons) */
-        .piston { width: 25px; height: 60px; background: white; margin: 0 5px; }
-        .piston-left { animation: pump 3s infinite ease-in-out; }
-        .piston-right { animation: pump 3s infinite ease-in-out 1.5s; height: 40px; }
+        /* INFO STYLE (The Hub) */
+        .hub-ring {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border: 1px dashed rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+        }
         
-        /* 3. INFO - The Hub (Geometric Node) */
-        .node-circle { border: 2px solid white; width: 60px; height: 60px; border-radius: 50%; position: absolute; }
-        .node-dot { width: 8px; height: 8px; background: white; border-radius: 50%; }
-        
-        /* 4. ADMIN - The System (Terminal) */
-        .terminal { font-family: 'JetBrains Mono', monospace; font-size: 60px; color: #33FF00; }
-        
-        /* 5. CONNECT - The Signal (Wave) */
-        .wave { border: 2px solid rgba(255,255,255,0.8); width: 100px; height: 100px; border-radius: 50%; position: absolute; }
-        .wave-2 { width: 60px; height: 60px; opacity: 0.5; }
-        .wave-3 { width: 20px; height: 20px; background: white; border: none; }
+        .hub-core {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
 
-        @keyframes pump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        .hub-orbit {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
         <div class="avatar">
-            <span class="jez-font">Jz.</span>
+            <span class="monogram">Fk.</span>
         </div>
-        <div class="label">jez@jesidela.co.za</div>
+        <div class="label">Frikkie</div>
     </div>
 
     <div class="card">
         <div class="avatar">
-            <div class="piston piston-left"></div>
-            <div class="piston piston-right"></div>
+            <div class="hub-ring">
+                <div class="hub-orbit"></div>
+            </div>
+            <div class="hub-core"></div>
         </div>
-        <div class="label">studio@jesidela.co.za</div>
-    </div>
-
-    <div class="card">
-        <div class="avatar">
-            <div class="node-circle" style="width: 100px; height: 100px; opacity: 0.3;"></div>
-            <div class="node-circle"></div>
-            <div class="node-dot"></div>
-        </div>
-        <div class="label">info@jesidela.co.za</div>
-    </div>
-
-    <div class="card">
-        <div class="avatar">
-            <span class="terminal">>_</span>
-        </div>
-        <div class="label">admin@jesidela.co.za</div>
-    </div>
-
-    <div class="card">
-        <div class="avatar">
-            <div class="wave"></div>
-            <div class="wave wave-2"></div>
-            <div class="wave wave-3"></div>
-        </div>
-        <div class="label">connect@jesidela.co.za</div>
+        <div class="label">Info Node</div>
     </div>
 
 </body>
