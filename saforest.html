@@ -26,14 +26,28 @@
         #login-overlay { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .cart-item { animation: slideIn 0.3s ease-out; }
+
+        /* --- ZIPLINE ANIMATION --- */
+        @keyframes zipline {
+            0% { left: 110%; transform: translateY(-50%) rotate(-10deg); }
+            40% { left: -20%; transform: translateY(-40%) rotate(5deg); } /* Flies across in ~2s */
+            100% { left: -20%; transform: translateY(-40%); } /* Waits off screen */
+        }
+        .zipline-anim {
+            position: absolute;
+            top: 50%;
+            animation: zipline 5s linear infinite; /* Runs every 5s */
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900" oncontextmenu="return false;">
 
     <div id="login-overlay">
         <div class="bg-white p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl border-t-8 border-saf-orange">
-            <div class="mb-8 flex justify-center">
-                <img src="images/favicon.png" class="h-16 w-auto animate-bounce">
+            
+            <div class="mb-8 relative h-20 w-full overflow-hidden border-b border-slate-100">
+                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-300 -translate-y-1/2"></div>
+                <img src="images/favicon.png" class="h-16 w-auto zipline-anim">
             </div>
             <h2 class="text-3xl font-black uppercase text-slate-900 mb-2 italic">Restricted<br>Access</h2>
             <p class="text-[10px] text-slate-500 mb-8 font-mono tracking-widest">AUTHORIZED PERSONNEL ONLY</p>
