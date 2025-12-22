@@ -24,12 +24,7 @@
         body { -webkit-user-select: none; user-select: none; }
         #success-panel { display: none; }
         #login-overlay { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        
-        /* Animation for adding items */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .cart-item { animation: slideIn 0.3s ease-out; }
     </style>
 </head>
@@ -42,9 +37,7 @@
             </div>
             <h2 class="text-3xl font-black uppercase text-slate-900 mb-2 italic">Restricted<br>Access</h2>
             <p class="text-[10px] text-slate-500 mb-8 font-mono tracking-widest">AUTHORIZED PERSONNEL ONLY</p>
-            
             <input type="password" id="access-code" placeholder="ENTER PASSCODE" class="w-full bg-slate-100 border-2 border-slate-200 p-4 rounded-xl text-center font-bold mb-4 focus:border-saf-orange outline-none uppercase tracking-widest transition-all">
-            
             <button onclick="verifyAccess()" class="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-saf-orange transition-colors uppercase tracking-widest text-sm">Authenticate</button>
             <p id="error-msg" class="text-red-600 text-[10px] font-bold mt-4 hidden bg-red-50 py-2 rounded">ACCESS DENIED: INVALID CREDENTIALS</p>
         </div>
@@ -68,7 +61,6 @@
     <main class="max-w-7xl mx-auto py-12 px-6 space-y-16">
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             <div class="lg:col-span-7 space-y-8">
                 <div class="hero-zoom h-80 rounded-[2.5rem] shadow-2xl flex items-end p-10 border-b-8 border-saf-orange relative overflow-hidden group">
                     <div class="relative z-10">
@@ -76,57 +68,29 @@
                         <h2 id="act-title" class="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Black Water Tubing</h2>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="map-pin" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Caledon</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (100 km from Cape Town 1 hour drive)<br>
-                            Adventure Farm situated on the N2, entrance at the <strong class="text-slate-800">Caledon Casino</strong>.
-                        </p>
+                        <div class="flex items-center gap-3 mb-3"><i data-lucide="map-pin" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Caledon</h4></div>
+                        <p class="text-xs text-slate-500 leading-relaxed">(100 km from Cape Town 1 hour drive)<br>Adventure Farm situated on the N2, entrance at the <strong class="text-slate-800">Caledon Casino</strong>.</p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="waves" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Kleinmond</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (100 km from Cape town)<br>
-                            Adventure Farm situated in the <strong class="text-slate-800">Kogelberg Nature Reserve</strong> at Kleinmond on the R45.
-                        </p>
+                        <div class="flex items-center gap-3 mb-3"><i data-lucide="waves" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Kleinmond</h4></div>
+                        <p class="text-xs text-slate-500 leading-relaxed">(100 km from Cape town)<br>Adventure Farm situated in the <strong class="text-slate-800">Kogelberg Nature Reserve</strong> at Kleinmond on the R45.</p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="mountain" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Cape Town</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            <strong class="text-slate-800">Silvermist Estate</strong> – Houtbay Road.<br>
-                            021 7950 225. Central mountain ziplining.
-                        </p>
+                        <div class="flex items-center gap-3 mb-3"><i data-lucide="mountain" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Cape Town</h4></div>
+                        <p class="text-xs text-slate-500 leading-relaxed"><strong class="text-slate-800">Silvermist Estate</strong> – Houtbay Road.<br>021 7950 225. Central mountain ziplining.</p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="compass" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Hermanus</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (121km from Cape Town)<br>
-                            Adventure Farm situated on the <strong class="text-slate-800">Hemel & Aarde road R320</strong>.
-                        </p>
+                        <div class="flex items-center gap-3 mb-3"><i data-lucide="compass" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Hermanus</h4></div>
+                        <p class="text-xs text-slate-500 leading-relaxed">(121km from Cape Town)<br>Adventure Farm situated on the <strong class="text-slate-800">Hemel & Aarde road R320</strong>.</p>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-5">
                 <div class="bg-white p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 sticky top-32">
-                    <h3 class="text-xl font-black uppercase italic mb-6 text-slate-800 flex items-center gap-2">
-                        <span class="w-2 h-8 bg-saf-orange block"></span> Build Your Adventure
-                    </h3>
-                    
+                    <h3 class="text-xl font-black uppercase italic mb-6 text-slate-800 flex items-center gap-2"><span class="w-2 h-8 bg-saf-orange block"></span> Build Your Adventure</h3>
                     <div class="space-y-6">
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Choose Activity</label>
@@ -144,39 +108,23 @@
                                     </select>
                                     <i data-lucide="chevron-down" class="absolute right-4 top-4 w-5 h-5 text-slate-400 pointer-events-none"></i>
                                 </div>
-                                <button onclick="addToBooking()" class="bg-slate-900 text-white p-4 rounded-xl hover:bg-saf-orange transition-colors">
-                                    <i data-lucide="plus" class="w-5 h-5"></i>
-                                </button>
+                                <button onclick="addToBooking()" class="bg-slate-900 text-white p-4 rounded-xl hover:bg-saf-orange transition-colors"><i data-lucide="plus" class="w-5 h-5"></i></button>
                             </div>
                         </div>
-
                         <div id="cart-container" class="bg-slate-50 rounded-xl p-4 border border-slate-100 hidden">
                             <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2">Current Selections</h4>
-                            <div id="cart-list" class="space-y-2 max-h-40 overflow-y-auto">
-                                </div>
+                            <div id="cart-list" class="space-y-2 max-h-40 overflow-y-auto"></div>
                         </div>
-
                         <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
                             <div class="relative z-10">
-                                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-4">
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Value</span>
-                                    <span id="total-val" class="text-xl font-bold">R 0</span>
-                                </div>
+                                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-4"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Value</span><span id="total-val" class="text-xl font-bold">R 0</span></div>
                                 <div class="flex justify-between items-end">
-                                    <div>
-                                        <span class="text-xs font-black text-saf-orange uppercase italic tracking-widest block mb-1">50% Deposit</span>
-                                        <span class="text-[9px] text-slate-400 font-mono">Secure your slots now</span>
-                                    </div>
+                                    <div><span class="text-xs font-black text-saf-orange uppercase italic tracking-widest block mb-1">50% Deposit</span><span class="text-[9px] text-slate-400 font-mono">Secure your slots now</span></div>
                                     <span id="deposit-val" class="text-4xl font-black text-white tracking-tighter">R 0.00</span>
                                 </div>
                             </div>
                         </div>
-
-                        <button onclick="executeApex()" id="book-btn" class="group w-full bg-saf-green hover:bg-green-800 text-white font-black py-5 rounded-2xl shadow-lg transition-all active:scale-95 text-xl uppercase italic tracking-widest flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
-                            <span>Proceed</span>
-                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                        </button>
-
+                        <button onclick="executeApex()" id="book-btn" class="group w-full bg-saf-green hover:bg-green-800 text-white font-black py-5 rounded-2xl shadow-lg transition-all active:scale-95 text-xl uppercase italic tracking-widest flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"><span>Proceed</span><i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i></button>
                         <div id="success-panel" class="p-6 bg-green-50 border-2 border-dashed border-green-200 rounded-2xl text-center animate-pulse">
                             <p class="text-saf-green font-black uppercase text-sm mb-1 tracking-widest italic">✓ Slots Reserved</p>
                             <p class="text-[10px] text-slate-500 font-bold uppercase">Redirecting to Payment Gateway...</p>
@@ -188,43 +136,33 @@
 
         <section class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
             <div class="bg-slate-900 p-8 flex justify-between items-center">
-                <div>
-                    <span class="text-saf-orange font-mono text-[10px] uppercase tracking-widest">Loyalty Systems Overview</span>
-                    <h2 class="text-3xl font-black text-white italic uppercase mt-1">Adventure Awaits!</h2>
-                </div>
-                <div class="hidden md:block">
-                    <div class="bg-white/10 px-4 py-2 rounded-lg text-white text-xs font-bold font-mono">USER: GUEST_01</div>
-                </div>
+                <div><span class="text-saf-orange font-mono text-[10px] uppercase tracking-widest">Loyalty Systems Overview</span><h2 class="text-3xl font-black text-white italic uppercase mt-1">Adventure Awaits!</h2></div>
+                <div class="hidden md:block"><div class="bg-white/10 px-4 py-2 rounded-lg text-white text-xs font-bold font-mono">USER: GUEST_01</div></div>
             </div>
-            
             <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="md:col-span-2 space-y-6">
-                    <div class="flex justify-between items-end">
-                        <h4 class="font-black text-slate-800 uppercase text-lg">Your Current Progress</h4>
-                        <span class="text-saf-green font-bold text-sm">123 Points</span>
-                    </div>
-                    
+                    <div class="flex justify-between items-end"><h4 class="font-black text-slate-800 uppercase text-lg">Your Current Progress</h4><span class="text-saf-green font-bold text-sm">123 Points</span></div>
                     <div class="h-8 bg-slate-100 rounded-full overflow-hidden relative border border-slate-200">
-                        <div class="absolute inset-0 flex items-center justify-between px-6 text-[10px] font-bold text-slate-400 z-10 pointer-events-none">
-                            <span>0</span>
-                            <span>100</span>
-                            <span>300</span>
-                            <span>500</span>
-                        </div>
+                        <div class="absolute inset-0 flex items-center justify-between px-6 text-[10px] font-bold text-slate-400 z-10 pointer-events-none"><span>0</span><span>100</span><span>300</span><span>500</span></div>
                         <div class="h-full bg-gradient-to-r from-saf-orange to-red-500 w-[25%] relative z-0"></div>
                     </div>
-
                     <p class="text-xs text-slate-500">Reach <strong class="text-slate-900">300 Points</strong> to unlock Level 2 rewards.</p>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100">
-                        <span class="block text-2xl font-black text-slate-800">4</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold">Ways to earn</span>
+                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100"><span class="block text-2xl font-black text-slate-800">4</span><span class="text-[9px] text-slate-500 uppercase font-bold">Ways to earn</span></div>
+                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100"><span class="block text-2xl font-black text-slate-800">3</span><span class="text-[9px] text-slate-500 uppercase font-bold">Levels</span></div>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 p-8 bg-slate-50">
+                <h4 class="font-black text-slate-400 uppercase text-xs mb-4 tracking-widest">Recent Loyalty History</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
+                        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i data-lucide="check" class="w-4 h-4"></i></div><span class="text-xs font-bold text-slate-700">Booking: Quad Biking</span></div>
+                        <span class="text-xs font-mono text-saf-green font-bold">+100 PTS</span>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100">
-                        <span class="block text-2xl font-black text-slate-800">3</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold">Levels</span>
+                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
+                        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i data-lucide="star" class="w-4 h-4"></i></div><span class="text-xs font-bold text-slate-700">Level Bonus</span></div>
+                        <span class="text-xs font-mono text-saf-green font-bold">+23 PTS</span>
                     </div>
                 </div>
             </div>
@@ -239,7 +177,6 @@
                     <a href="mailto:bookings@saforestadventures.co.za" class="text-saf-orange hover:underline block mt-2">bookings@saforestadventures.co.za</a>
                 </div>
             </div>
-            
             <div>
                 <h4 class="font-black text-slate-900 uppercase mb-4">Office Hours</h4>
                 <div class="space-y-2 text-xs font-medium text-slate-600">
@@ -247,10 +184,10 @@
                     <p class="text-[10px] text-slate-400 mt-2 italic">For bookings please use our online booking system.</p>
                 </div>
             </div>
-
             <div class="flex flex-col items-center md:items-end justify-center">
                 <img src="images/logo.png" class="h-12 opacity-80 mb-2">
                 <span class="text-[9px] text-slate-400 font-mono uppercase">© SA Forest Adventures 2025</span>
+                <span class="text-[8px] text-saf-green font-black uppercase mt-2 tracking-widest border-t border-slate-200 pt-2">Powered by The SKELMOS&trade; Collective</span>
             </div>
         </footer>
 
@@ -258,29 +195,15 @@
 
     <script>
         lucide.createIcons();
-
-        // 1. SECURITY
         document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123) return false; 
-            if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) return false; 
-            if (e.ctrlKey && e.keyCode == 85) return false; 
-        };
+        document.onkeydown = function(e) { if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false; };
 
-        // 2. LOGIN
         function verifyAccess() {
             const code = document.getElementById('access-code').value;
-            const errorMsg = document.getElementById('error-msg');
-            if (code === "FOREST2025") {
-                document.getElementById('login-overlay').style.display = 'none';
-            } else {
-                errorMsg.classList.remove('hidden');
-                document.getElementById('access-code').value = '';
-                document.getElementById('access-code').focus();
-            }
+            if (code === "FOREST2025") { document.getElementById('login-overlay').style.display = 'none'; } 
+            else { document.getElementById('error-msg').classList.remove('hidden'); document.getElementById('access-code').value = ''; document.getElementById('access-code').focus(); }
         }
 
-        // 3. CART SYSTEM (NEW)
         let cartItems = [];
         let totalValue = 0;
 
@@ -288,51 +211,25 @@
             const select = document.getElementById('act-select');
             const price = parseInt(select.value);
             const text = select.options[select.selectedIndex].text.split(' - ')[0];
-
-            // Add to array
             cartItems.push({ name: text, price: price });
-            
-            // Update UI
-            renderCart();
-            updateTotals();
-            
-            // Update Hero Title to last added item
+            renderCart(); updateTotals();
             document.getElementById('act-title').innerText = text;
         }
 
         function removeFromCart(index) {
             cartItems.splice(index, 1);
-            renderCart();
-            updateTotals();
+            renderCart(); updateTotals();
         }
 
         function renderCart() {
             const list = document.getElementById('cart-list');
             const container = document.getElementById('cart-container');
-            
-            if (cartItems.length > 0) {
-                container.classList.remove('hidden');
-            } else {
-                container.classList.add('hidden');
-            }
-
+            if (cartItems.length > 0) { container.classList.remove('hidden'); } else { container.classList.add('hidden'); }
             list.innerHTML = '';
-            
             cartItems.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'cart-item flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200 text-sm';
-                div.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <div class="w-2 h-2 rounded-full bg-saf-orange"></div>
-                        <span class="font-bold text-slate-700">${item.name}</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-mono text-xs font-bold text-slate-500">R${item.price}</span>
-                        <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                `;
+                div.innerHTML = `<div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-saf-orange"></div><span class="font-bold text-slate-700">${item.name}</span></div><div class="flex items-center gap-3"><span class="font-mono text-xs font-bold text-slate-500">R${item.price}</span><button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600"><i data-lucide="x" class="w-4 h-4"></i></button></div>`;
                 list.appendChild(div);
             });
             lucide.createIcons();
@@ -341,31 +238,18 @@
         function updateTotals() {
             totalValue = cartItems.reduce((sum, item) => sum + item.price, 0);
             const deposit = totalValue / 2;
-            
             document.getElementById('total-val').innerText = "R " + totalValue.toLocaleString();
             document.getElementById('deposit-val').innerText = "R " + deposit.toLocaleString();
-
-            // Enable/Disable Button
             const btn = document.getElementById('book-btn');
-            if (totalValue > 0) {
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                btn.removeAttribute('disabled');
-            } else {
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.setAttribute('disabled', 'true');
-            }
+            if (totalValue > 0) { btn.classList.remove('opacity-50', 'cursor-not-allowed'); btn.removeAttribute('disabled'); } 
+            else { btn.classList.add('opacity-50', 'cursor-not-allowed'); btn.setAttribute('disabled', 'true'); }
         }
 
         function executeApex() {
             if (totalValue === 0) return;
-            
             const btn = document.getElementById('book-btn');
             btn.innerHTML = `<span class="animate-pulse">VERIFYING...</span>`;
-            
-            setTimeout(() => {
-                btn.style.display = "none";
-                document.getElementById('success-panel').style.display = "block";
-            }, 1000);
+            setTimeout(() => { btn.style.display = "none"; document.getElementById('success-panel').style.display = "block"; }, 1000);
         }
     </script>
 </body>
