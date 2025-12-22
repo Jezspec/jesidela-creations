@@ -1,316 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SA Forest Adventures | Secure Portal</title>
+    <title>JESIDELA CREATIONS | Soul meets System</title>
     
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><path d='M40 30 V65 C40 75 35 75 30 72' stroke='white' stroke-width='6' fill='none' stroke-linecap='square'/><path d='M80 30 C65 30 55 40 55 52 C55 64 65 74 80 74' stroke='white' stroke-width='6' fill='none' stroke-linecap='square'/></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
-        :root { --saf-green: #2D5A27; --saf-orange: #FF8C00; }
-        .bg-saf-green { background-color: var(--saf-green); }
-        .bg-saf-orange { background-color: var(--saf-orange); }
-        .text-saf-green { color: var(--saf-green); }
-        .text-saf-orange { color: var(--saf-orange); }
+        :root { --bg-dark: #050505; --text-light: #F5F5F0; }
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-geometric { font-family: 'Century Gothic', 'Futura', 'Tw Cen MT', sans-serif; }
         
-        .hero-zoom { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://www.saforestadventures.co.za/wp-content/uploads/2023/04/tubing-scaled.jpg'); 
-            background-size: cover; background-position: center;
-        }
-        
-        /* SECURITY */
-        body { -webkit-user-select: none; user-select: none; }
-        #success-panel { display: none; }
-        #login-overlay { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .glass-nav { background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-system { border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .btn-system:hover { background: white; color: black; border-color: white; }
+        .art-preview { filter: grayscale(100%) contrast(110%); transition: all 0.7s ease; }
+        .group:hover .art-preview { filter: grayscale(0%) contrast(100%); transform: scale(1.05); }
+        .vignette::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8)); pointer-events: none; }
+        .thumb-active { border-color: white !important; opacity: 1 !important; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900" oncontextmenu="return false;">
+<body class="antialiased selection:bg-white selection:text-black">
 
-    <div id="login-overlay">
-        <div class="bg-white p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl border-t-8 border-saf-orange">
-            <div class="mb-8 flex justify-center">
-                <img src="images/favicon.png" class="h-16 w-auto animate-bounce">
-            </div>
-            <h2 class="text-3xl font-black uppercase text-slate-900 mb-2 italic">Restricted<br>Access</h2>
-            <p class="text-[10px] text-slate-500 mb-8 font-mono tracking-widest">AUTHORIZED PERSONNEL ONLY</p>
-            
-            <input type="password" id="access-code" placeholder="ENTER PASSCODE" class="w-full bg-slate-100 border-2 border-slate-200 p-4 rounded-xl text-center font-bold mb-4 focus:border-saf-orange outline-none uppercase tracking-widest transition-all">
-            
-            <button onclick="verifyAccess()" class="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-saf-orange transition-colors uppercase tracking-widest text-sm">Authenticate</button>
-            <p id="error-msg" class="text-red-600 text-[10px] font-bold mt-4 hidden bg-red-50 py-2 rounded">ACCESS DENIED: INVALID CREDENTIALS</p>
-        </div>
-    </div>
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <a href="#" class="group flex items-center gap-3">
+                    <svg class="w-8 h-8 border border-white/30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" fill="black"/>
+                        <path d="M40 30 V65 C40 75 35 75 30 72" stroke="white" stroke-width="6" stroke-linecap="square"/>
+                        <path d="M80 30 C65 30 55 40 55 52 C55 64 65 74 80 74" stroke="white" stroke-width="6" stroke-linecap="square"/>
+                    </svg>
+                    <span class="font-geometric font-bold text-[10px] tracking-[0.2em] text-gray-400 group-hover:text-white transition-colors">JESIDELA CREATIONS</span>
+                </a>
 
-    <div class="bg-slate-900 text-white text-[9px] font-mono py-2 px-6 flex justify-between uppercase tracking-widest sticky top-0 z-40">
-        <span>Apex Systems: Booking Protocol [ACTIVE]</span>
-        <span class="text-green-500 italic">Secure Connection: saforestadventures.co.za</span>
-    </div>
-
-    <header class="bg-white border-b border-slate-200 sticky top-8 z-30 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <img src="images/logo.png" alt="SA Forest Adventures" class="h-16 md:h-20 object-contain">
-            
-            <div class="text-right hidden md:block">
-                <a href="mailto:bookings@saforestadventures.co.za" class="text-xs font-bold text-slate-900 hover:text-saf-orange transition">bookings@saforestadventures.co.za</a>
-                <p class="text-[10px] text-slate-500 font-mono mt-1">021 795 0225</p>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto py-12 px-6 space-y-16">
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            <div class="lg:col-span-7 space-y-8">
-                <div class="hero-zoom h-80 rounded-[2.5rem] shadow-2xl flex items-end p-10 border-b-8 border-saf-orange relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <span class="bg-saf-orange text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest mb-2 inline-block">Most Popular</span>
-                        <h2 id="act-title" class="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Black Water Tubing</h2>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="map-pin" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Caledon</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (100 km from Cape Town 1 hour drive)<br>
-                            Adventure Farm situated on the N2, entrance at the <strong class="text-slate-800">Caledon Casino</strong>.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="waves" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Kleinmond</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (100 km from Cape town)<br>
-                            Adventure Farm situated in the <strong class="text-slate-800">Kogelberg Nature Reserve</strong> at Kleinmond on the R45. Rafting & Tubing HQ.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="mountain" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Cape Town</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            <strong class="text-slate-800">Silvermist Estate</strong> – Houtbay Road.<br>
-                            021 7950 225. Central mountain ziplining.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3">
-                            <i data-lucide="compass" class="w-5 h-5 text-saf-green"></i>
-                            <h4 class="font-black text-sm uppercase text-slate-800">Hermanus</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            (121km from Cape Town)<br>
-                            Adventure Farm situated on the <strong class="text-slate-800">Hemel & Aarde road R320</strong>, Hemel & Aarde valley.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5">
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 sticky top-32">
-                    <h3 class="text-xl font-black uppercase italic mb-6 text-slate-800 flex items-center gap-2">
-                        <span class="w-2 h-8 bg-saf-orange block"></span> Direct Checkout
-                    </h3>
+                <div class="hidden md:flex items-center gap-8 font-mono text-[10px] uppercase tracking-widest">
+                    <a href="#studio" class="hover:text-gray-400">Studio</a>
+                    <a href="#atelier" class="hover:text-gray-400">Atelier</a>
+                    <a href="#about" class="hover:text-gray-400">Arch</a>
                     
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Select Adventure</label>
-                            <div class="relative">
-                                <select id="act-select" onchange="runApexUpdate()" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 font-bold text-slate-800 appearance-none focus:border-saf-green outline-none transition-colors text-sm">
-                                    <option value="1050" selected>Ziplining (Cape Town) - R1050</option>
-                                    <option value="900">Quad Biking (Hermanus/Botriver) - R900</option>
-                                    <option value="450">Quad Biking (Child U16) - R450</option>
-                                    <option value="430">Wine Blending - R430</option>
-                                    <option value="200">Paintball (Hermanus) - R200</option>
-                                    <option value="150">Target Shooting - R150</option>
-                                    <option value="550">Black Water Tubing - R550</option>
-                                    <option value="1800">K3 Zipline (World's Longest) - R1800</option>
-                                </select>
-                                <i data-lucide="chevron-down" class="absolute right-4 top-4 w-5 h-5 text-slate-400 pointer-events-none"></i>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-4 opacity-10">
-                                <i data-lucide="ticket" class="w-24 h-24"></i>
-                            </div>
-                            <div class="relative z-10">
-                                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-4">
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Value</span>
-                                    <span id="total-val" class="text-xl font-bold">R 1 050</span>
-                                </div>
-                                <div class="flex justify-between items-end">
-                                    <div>
-                                        <span class="text-xs font-black text-saf-orange uppercase italic tracking-widest block mb-1">50% Deposit</span>
-                                        <span class="text-[9px] text-slate-400 font-mono">Secure your slot now</span>
-                                    </div>
-                                    <span id="deposit-val" class="text-4xl font-black text-white tracking-tighter">R 525.00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button onclick="executeApex()" id="book-btn" class="group w-full bg-saf-green hover:bg-green-800 text-white font-black py-5 rounded-2xl shadow-lg transition-all active:scale-95 text-xl uppercase italic tracking-widest flex items-center justify-center gap-2">
-                            <span>Proceed</span>
-                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                        </button>
-
-                        <div id="success-panel" class="p-6 bg-green-50 border-2 border-dashed border-green-200 rounded-2xl text-center animate-pulse">
-                            <p class="text-saf-green font-black uppercase text-sm mb-1 tracking-widest italic">✓ Slot Reserved</p>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase">Redirecting to Payment Gateway...</p>
-                        </div>
-                    </div>
+                    <a href="saforest.html" class="text-amber-500 hover:text-white transition-colors font-bold border border-amber-900/30 px-3 py-1 bg-amber-500/10 rounded">CLIENT LOGIN</a>
+                    
+                    <a href="#contact" class="btn-system px-5 py-2">Initiate</a>
                 </div>
+                <button class="md:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
             </div>
         </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black border-t border-white/10 p-6 space-y-4 font-mono text-xs uppercase tracking-widest">
+            <a href="#studio" class="block py-2 text-gray-400">Studio</a>
+            <a href="#atelier" class="block py-2 text-gray-400">Atelier</a>
+            <a href="#about" class="block py-2 text-gray-400">The Arch</a>
+            <a href="saforest.html" class="block py-2 text-amber-500 font-bold">CLIENT LOGIN</a>
+            <a href="#contact" class="block py-2 text-white font-bold">Initiate Protocol</a>
+        </div>
+    </nav>
 
-        <section class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
-            <div class="bg-slate-900 p-8 flex justify-between items-center">
+    <section id="home" class="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-24 z-10 border-b border-white/5">
+        <div class="max-w-7xl w-full px-6 lg:px-8 text-center flex-grow flex flex-col justify-center">
+            
+            <div data-aos="fade-up" data-aos-duration="1200">
+                <h1 class="text-6xl md:text-9xl font-geometric font-light tracking-tight mb-2 text-white">JESIDELA</h1>
+                <h2 class="text-3xl md:text-6xl font-serif italic text-gray-400 mb-10 tracking-wide">Soul meets System.</h2>
+                
+                <div class="flex flex-wrap justify-center gap-6 mb-24">
+                    <a href="#studio" class="btn-system px-10 py-4 text-xs font-bold uppercase tracking-[0.15em]"><span>View Gallery</span></a>
+                    <a href="#atelier" class="btn-system px-10 py-4 text-xs font-mono uppercase tracking-[0.15em]"><span>Browse Atelier</span></a>
+                </div>
+            </div>
+
+            <div class="relative w-full max-w-3xl mx-auto" data-aos="fade-up">
+                <div class="absolute -top-8 left-0 right-0 text-center">
+                    <span class="font-mono text-[9px] text-green-500 uppercase tracking-widest border-b border-green-900 pb-1">Live System</span>
+                </div>
+                
+                <a href="https://no-bullshit-e1046.web.app" target="_blank" class="block relative h-[500px] bg-gray-900 border border-white/10 p-1 group cursor-pointer overflow-hidden">
+                    <div class="relative w-full h-full overflow-hidden vignette">
+                        <img src="images/nobs.png" 
+                             onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80'" 
+                             class="absolute inset-0 w-full h-full object-contain bg-black art-preview opacity-90 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="absolute bottom-0 left-0 w-full p-4 flex justify-between items-end z-20 opacity-80 group-hover:opacity-100 transition-opacity">
+                            <span class="font-mono text-[9px] text-green-400 bg-black/50 px-2">STATUS: ONLINE</span>
+                            <span class="font-sans text-[9px] text-white uppercase tracking-widest border-b border-white bg-black/50 px-2">Launch App</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="absolute inset-0 z-[-1] opacity-20" style="background-image: linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px); background-size: 40px 40px;"></div>
+    </section>
+
+    <section id="studio" class="py-32 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-16" data-aos="fade-up">
                 <div>
-                    <span class="text-saf-orange font-mono text-[10px] uppercase tracking-widest">Loyalty Systems Overview</span>
-                    <h2 class="text-3xl font-black text-white italic uppercase mt-1">Adventure Awaits!</h2>
+                    <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">01 // THE STUDIO</h3>
+                    <h2 class="text-4xl font-serif italic text-white">Visual Artifacts</h2>
                 </div>
-                <div class="hidden md:block">
-                    <div class="bg-white/10 px-4 py-2 rounded-lg text-white text-xs font-bold font-mono">USER: GUEST_01</div>
+                <div class="hidden md:block w-24 h-[1px] bg-white/20"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+                <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up">
+                    <img src="images/d.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="font-mono text-[9px] bg-black text-white px-3 py-1">THE VOID</span>
+                    </div>
+                </div>
+                <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/b.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_B</span>
+                    </div>
+                </div>
+                <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="images/e.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_E</span>
+                    </div>
+                </div>
+                <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up">
+                    <img src="images/h.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_H</span>
+                    </div>
+                </div>
+                <div class="aspect-square bg-gray-900 relative group overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/k.jpg" onerror="this.style.display='none'" class="w-full h-full object-cover art-preview opacity-60 group-hover:opacity-100">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="font-mono text-[9px] bg-black text-white px-3 py-1">ARTIFACT_K</span>
+                    </div>
+                </div>
+                <div class="aspect-square bg-black border border-white/5 relative group overflow-hidden flex flex-col items-center justify-center text-center p-6" data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="font-serif italic text-2xl text-gray-600 mb-2">The Archive</h4>
+                    <span class="font-mono text-[9px] text-gray-500 uppercase tracking-widest">More Coming Soon</span>
                 </div>
             </div>
-            
-            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="md:col-span-2 space-y-6">
-                    <div class="flex justify-between items-end">
-                        <h4 class="font-black text-slate-800 uppercase text-lg">Your Current Progress</h4>
-                        <span class="text-saf-green font-bold text-sm">123 Points</span>
+        </div>
+    </section>
+
+    <section id="atelier" class="py-32 border-b border-white/5 bg-[#080808]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-16 items-start">
+                
+                <div class="w-full md:w-1/2" data-aos="fade-right">
+                    
+                    <div class="relative aspect-[3/4] bg-black border border-white/10 p-4 mb-4">
+                        <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-500">ITEM: <span id="product-id">JC_001</span></div>
+                        <img id="main-product-image" src="images/1.jpg" onerror="this.src='https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                     </div>
                     
-                    <div class="h-8 bg-slate-100 rounded-full overflow-hidden relative border border-slate-200">
-                        <div class="absolute inset-0 flex items-center justify-between px-6 text-[10px] font-bold text-slate-400 z-10 pointer-events-none">
-                            <span>0</span>
-                            <span>100</span>
-                            <span>300</span>
-                            <span>500</span>
-                        </div>
-                        <div class="h-full bg-gradient-to-r from-saf-orange to-red-500 w-[25%] relative z-0"></div>
-                    </div>
-
-                    <p class="text-xs text-slate-500">Reach <strong class="text-slate-900">300 Points</strong> to unlock Level 2 rewards.</p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100">
-                        <span class="block text-2xl font-black text-slate-800">4</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold">Ways to earn</span>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100">
-                        <span class="block text-2xl font-black text-slate-800">3</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold">Levels</span>
+                    <div class="grid grid-cols-5 gap-2">
+                         <img src="images/1.jpg" onclick="swapProduct('1', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer thumb-active">
+                         <img src="images/2.jpg" onclick="swapProduct('2', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/3.jpg" onclick="swapProduct('3', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/4.jpg" onclick="swapProduct('4', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                         <img src="images/5.jpg" onclick="swapProduct('5', this)" class="aspect-square object-cover border border-white/10 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
                     </div>
                 </div>
-            </div>
-            
-            <div class="border-t border-slate-100 p-8 bg-slate-50">
-                <h4 class="font-black text-slate-400 uppercase text-xs mb-4 tracking-widest">Recent Loyalty History</h4>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i data-lucide="check" class="w-4 h-4"></i></div>
-                            <span class="text-xs font-bold text-slate-700">Booking: Quad Biking</span>
-                        </div>
-                        <span class="text-xs font-mono text-saf-green font-bold">+100 PTS</span>
+                
+                <div class="w-full md:w-1/2 space-y-8" data-aos="fade-left">
+                    <div>
+                        <h3 class="font-mono text-[10px] text-amber-500 tracking-widest mb-3">02 // ATELIER</h3>
+                        <h2 id="product-title" class="text-5xl font-serif italic text-white mb-4">The Silver Heart</h2>
+                        <p id="product-desc" class="text-gray-400 font-light leading-relaxed max-w-md">
+                            Polished stainless steel heart pendant on a delicate chain. A symbol of enduring affection.
+                        </p>
                     </div>
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i data-lucide="star" class="w-4 h-4"></i></div>
-                            <span class="text-xs font-bold text-slate-700">Level Bonus</span>
+
+                    <div class="space-y-4 border-t border-white/10 pt-8">
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">MATERIAL</span>
+                            <span id="product-material" class="text-white">STAINLESS STEEL</span>
                         </div>
-                        <span class="text-xs font-mono text-saf-green font-bold">+23 PTS</span>
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">EDITION</span>
+                            <span class="text-white">OPEN EDITION</span>
+                        </div>
+                        <div class="flex justify-between font-mono text-xs">
+                            <span class="text-gray-500">PRICE</span>
+                            <span id="product-price" class="text-white">R 350.00</span>
+                        </div>
                     </div>
+
+                    <a href="#contact" class="inline-block btn-system px-12 py-4 text-xs font-bold uppercase tracking-[0.2em] mt-8">
+                        Acquire Artifact
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer class="bg-white rounded-3xl p-8 border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+    <section id="about" class="py-32 border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center" data-aos="fade-up">
+            <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-6">03 // THE ARCHITECT</h3>
+            <p class="text-2xl md:text-4xl font-serif italic leading-tight text-gray-200 mb-10">"We do not just build websites.<br>We construct digital cathedrals."</p>
+            <div class="mt-16 pt-16 border-t border-white/5 flex justify-center gap-12 font-serif italic text-gray-600"><span>Arch: Jez</span><span>&</span><span>Arch: Frikkie</span></div>
+        </div>
+    </section>
+
+    <section id="contact" class="relative py-32 z-10 bg-void">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
-                <h4 class="font-black text-slate-900 uppercase mb-4">Contact Details</h4>
-                <div class="space-y-2 text-xs font-medium text-slate-600">
-                    <p class="font-bold">021 795 0225</p>
-                    <p class="font-bold">079 495 3987</p>
-                    <a href="mailto:bookings@saforestadventures.co.za" class="text-saf-orange hover:underline block mt-2">bookings@saforestadventures.co.za</a>
+                <h3 class="font-mono text-[10px] text-gray-500 tracking-widest mb-3">04 // CONNECT</h3>
+                <h2 class="text-4xl font-serif italic text-white mb-8">Initiate Protocol</h2>
+                <div class="space-y-6 font-mono text-xs">
+                    <a href="mailto:info@jesidela.co.za" class="block text-gray-400 hover:text-white">info@jesidela.co.za</a>
+                    <div class="text-gray-600">Paarl, South Africa</div>
                 </div>
             </div>
-            
-            <div>
-                <h4 class="font-black text-slate-900 uppercase mb-4">Office Hours</h4>
-                <div class="space-y-2 text-xs font-medium text-slate-600">
-                    <p>9:00 till 17:00</p>
-                    <p class="text-[10px] text-slate-400 mt-2 italic">For bookings please use our online booking system.</p>
-                </div>
+            <form name="jesidela-contact" method="POST" data-netlify="true" class="space-y-6">
+                <input type="text" name="name" class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs focus:outline-none focus:border-white transition-colors placeholder-gray-700" placeholder="NAME" required>
+                <textarea name="message" rows="4" class="w-full bg-white/5 border border-white/10 p-3 text-white text-xs focus:outline-none focus:border-white transition-colors placeholder-gray-700" placeholder="MESSAGE..." required></textarea>
+                <button type="submit" class="w-full py-4 btn-system font-bold font-mono text-[10px] uppercase tracking-[0.2em]">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col items-center md:items-start">
+                <span class="font-bold text-xs text-white uppercase tracking-widest">JESIDELA CREATIONS</span>
+                <span class="font-mono text-[9px] text-gray-600 uppercase tracking-widest mt-1">© 2025 All Rights Reserved.</span>
             </div>
-
-            <div class="flex flex-col items-center md:items-end justify-center">
-                <img src="images/logo.png" class="h-12 opacity-80 mb-2">
-                <span class="text-[9px] text-slate-400 font-mono uppercase">© SA Forest Adventures 2025</span>
+            <div class="flex gap-6 font-mono text-[9px] text-gray-500 uppercase tracking-widest">
+                <a href="saforest.html" class="hover:text-amber-500">Client Login</a>
+                <a href="#" class="hover:text-white">Terms</a>
+                <a href="#" class="hover:text-white">Privacy</a>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-    </main>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         lucide.createIcons();
+        AOS.init({ duration: 1000, once: true, offset: 50 });
 
-        // 1. SECURITY: Prevent Right Click & Key Combos
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123) return false; 
-            if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) return false; 
-            if (e.ctrlKey && e.keyCode == 85) return false; 
+        const products = {
+            '1': {
+                title: "The Silver Heart",
+                desc: "Polished stainless steel heart pendant on a delicate chain. A symbol of enduring affection.",
+                material: "STAINLESS STEEL",
+                price: "R 350.00"
+            },
+            '2': {
+                title: "The Silver Cross",
+                desc: "Classic flat snake chain with a minimal cross pendant. Sleek, holy, and structured.",
+                material: "STAINLESS STEEL",
+                price: "R 450.00"
+            },
+            '3': {
+                title: "The Crystal Butterfly",
+                desc: "Delicate chain featuring a crystal-encrusted butterfly. Light, transformation, and detail.",
+                material: "ZINC ALLOY / CRYSTAL",
+                price: "R 400.00"
+            },
+            '4': {
+                title: "The Paperclip Link",
+                desc: "Modern open-link paperclip chain. Industrial minimalism at its finest.",
+                material: "STAINLESS STEEL",
+                price: "R 550.00"
+            },
+            '5': {
+                title: "The Herringbone",
+                desc: "Fluid, flat snake chain (Herringbone). Liquid metal texture that sits flush against the skin.",
+                material: "STAINLESS STEEL",
+                price: "R 600.00"
+            }
         };
 
-        // 2. LOGIN LOGIC
-        function verifyAccess() {
-            const code = document.getElementById('access-code').value;
-            const errorMsg = document.getElementById('error-msg');
-            
-            // PASSWORD (Case Sensitive)
-            if (code === "FOREST2025") {
-                document.getElementById('login-overlay').style.display = 'none';
-            } else {
-                errorMsg.classList.remove('hidden');
-                document.getElementById('access-code').value = '';
-                document.getElementById('access-code').focus();
+        function swapProduct(id, element) {
+            document.getElementById('main-product-image').src = 'images/' + id + '.jpg';
+            document.getElementById('product-id').innerText = 'JC_00' + id;
+
+            const data = products[id];
+            if (data) {
+                document.getElementById('product-title').innerText = data.title;
+                document.getElementById('product-desc').innerText = data.desc;
+                document.getElementById('product-material').innerText = data.material;
+                document.getElementById('product-price').innerText = data.price;
             }
-        }
-
-        // 3. BOOKING LOGIC (DYNAMIC UPDATES)
-        function runApexUpdate() {
-            const select = document.getElementById('act-select');
-            const price = select.value;
-            document.getElementById('act-title').innerText = select.options[select.selectedIndex].text.split(' - ')[0];
-            const deposit = price / 2;
-            document.getElementById('total-val').innerText = "R " + parseInt(price).toLocaleString();
-            document.getElementById('deposit-val').innerText = "R " + deposit.toLocaleString();
-        }
-
-        function executeApex() {
-            const btn = document.getElementById('book-btn');
             
-            btn.innerHTML = `<span class="animate-pulse">VERIFYING...</span>`;
-            
-            setTimeout(() => {
-                btn.style.display = "none";
-                document.getElementById('success-panel').style.display = "block";
-            }, 1000);
+            const thumbs = document.querySelectorAll('#atelier .grid img');
+            thumbs.forEach(img => {
+                img.classList.remove('thumb-active');
+                img.classList.add('opacity-60');
+            });
+            element.classList.remove('opacity-60');
+            element.classList.add('thumb-active');
         }
     </script>
 </body>
