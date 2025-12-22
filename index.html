@@ -133,23 +133,11 @@
             <hr class="border-t border-white/10 w-full mb-16 opacity-60">
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-                
                 <div class="flex justify-start">
-                    <img src="images/Jess.jpeg" 
-                         alt="Jez" 
-                         data-aos="fade" 
-                         data-aos-delay="200" 
-                         data-aos-duration="1500"
-                         class="w-[280px] md:w-[320px] aspect-[4/5] object-cover grayscale opacity-90 contrast-[0.9] hover:opacity-100 transition-opacity duration-700">
+                    <img src="images/Jess.jpeg" alt="Jez" data-aos="fade" data-aos-delay="200" data-aos-duration="1500" class="w-[280px] md:w-[320px] aspect-[4/5] object-cover grayscale opacity-90 contrast-[0.9] hover:opacity-100 transition-opacity duration-700">
                 </div>
-
                 <div class="flex justify-start">
-                    <img src="images/Frikkie.jpg" 
-                         alt="Frikkie" 
-                         data-aos="fade" 
-                         data-aos-delay="400" 
-                         data-aos-duration="1500"
-                         class="w-[280px] md:w-[320px] aspect-[4/5] object-cover grayscale opacity-80 contrast-[1.1] brightness-90 hover:opacity-100 transition-opacity duration-700">
+                    <img src="images/Frikkie.jpg" alt="Frikkie" data-aos="fade" data-aos-delay="400" data-aos-duration="1500" class="w-[280px] md:w-[320px] aspect-[4/5] object-cover grayscale opacity-80 contrast-[1.1] brightness-90 hover:opacity-100 transition-opacity duration-700">
                 </div>
             </div>
 
@@ -176,7 +164,9 @@
     <footer class="bg-black py-12 border-t border-white/5 mt-auto">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex flex-col items-center md:items-start group cursor-default">
-                <span class="font-serif font-bold text-xs text-white uppercase tracking-widest hover:animate-glyph-decode hover:text-amber-500 transition-colors">Powered by The SKELMOS&trade; Collective</span>
+                <span class="hacker-text font-serif font-bold text-xs text-white uppercase tracking-widest hover:text-amber-500 transition-colors" data-value="Powered by The SKELMOS™ Collective">
+                    Powered by The SKELMOS&trade; Collective
+                </span>
                 <span class="font-mono text-[9px] text-gray-600 uppercase tracking-widest mt-1">© 2025 All Rights Reserved.</span>
             </div>
             <div class="flex gap-6 font-mono text-[9px] text-gray-500 uppercase tracking-widest">
@@ -190,6 +180,43 @@
     <script>
         lucide.createIcons();
         AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // --- AUTOMATIC HACKER TEXT ANIMATION ---
+        const element = document.querySelector(".hacker-text");
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=[]{}|;':,./<>?ΘΞΔΣΠΨΩ";
+        const originalText = element.dataset.value;
+
+        function runScramble() {
+            let iteration = 0;
+            clearInterval(element.interval);
+            
+            element.interval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if(index < iteration) {
+                            return originalText[index];
+                        }
+                        return letters[Math.floor(Math.random() * letters.length)];
+                    })
+                    .join("");
+                
+                if(iteration >= originalText.length){ 
+                    clearInterval(element.interval);
+                }
+                
+                iteration += 1 / 3;
+            }, 30);
+        }
+
+        // 1. Run immediately on load (optional, remove if you want to wait 10s first)
+        // runScramble(); 
+
+        // 2. Run automatically every 10 seconds
+        setInterval(runScramble, 10000);
+
+        // 3. Keep the hover effect too (just in case they do mouse over)
+        element.onmouseover = runScramble;
     </script>
 </body>
 </html>
