@@ -3,268 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SA Forest Adventures | Secure Portal</title>
-    
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    
+    <title>SA Forest Adventures | Apex Performance V2.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root { --saf-green: #2D5A27; --saf-orange: #FF8C00; }
+        :root { --saf-green: #2D5A27; --saf-orange: #FF8C00; --saf-red: #cc2b2b; }
         .bg-saf-green { background-color: var(--saf-green); }
         .bg-saf-orange { background-color: var(--saf-orange); }
-        .text-saf-green { color: var(--saf-green); }
-        .text-saf-orange { color: var(--saf-orange); }
+        .bg-saf-red { background-color: var(--saf-red); }
+        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; -webkit-user-select: none; user-select: none; overflow-x: hidden; }
         
-        .hero-zoom { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://www.saforestadventures.co.za/wp-content/uploads/2023/04/tubing-scaled.jpg'); 
-            background-size: cover; background-position: center;
+        /* RESTORED ANIMATION LOGIC */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
         }
+        @keyframes pulseBorder {
+            0% { border-color: rgba(255, 140, 0, 0.5); }
+            50% { border-color: rgba(255, 140, 0, 1); }
+            100% { border-color: rgba(255, 140, 0, 0.5); }
+        }
+        .animate-entrance { animation: fadeInScale 0.8s ease-out forwards; }
+        .pulse-orange { animation: pulseBorder 2s infinite; }
         
-        body { -webkit-user-select: none; user-select: none; }
-        #success-panel { display: none; }
-        #login-overlay { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .cart-item { animation: slideIn 0.3s ease-out; }
-
-        /* --- ZIPLINE ANIMATION --- */
-        @keyframes zipline {
-            0% { left: 110%; transform: translateY(-50%) rotate(-10deg); }
-            40% { left: -20%; transform: translateY(-40%) rotate(5deg); } /* Flies across in ~2s */
-            100% { left: -20%; transform: translateY(-40%); } /* Waits off screen */
-        }
-        .zipline-anim {
-            position: absolute;
-            top: 50%;
-            animation: zipline 5s linear infinite; /* Runs every 5s */
-        }
+        #vault-content, #safety-banner { display: none; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .day-card { aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; transition: all 0.2s; border: 1px solid #1e293b; background: #0f172a; color: white; }
+        .day-card:hover:not(.cal-disabled) { border-color: var(--saf-orange); transform: translateY(-2px); }
+        .cal-active { background: var(--saf-green) !important; color: white !important; border-color: var(--saf-green) !important; box-shadow: 0 4px 15px rgba(45, 90, 39, 0.4); }
+        .cal-disabled { opacity: 0.15; cursor: not-allowed; pointer-events: none; background: #020617; }
+        .weather-status { font-size: 6px; font-weight: 900; margin-top: 2px; text-transform: uppercase; }
+        .shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900" oncontextmenu="return false;">
+<body oncontextmenu="return false;">
 
-    <div id="login-overlay">
-        <div class="bg-white p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl border-t-8 border-saf-orange">
+    <div id="pin-screen" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center flex-col p-6 text-white text-center">
+        <div class="animate-entrance flex flex-col items-center">
+            <img src="C:/Users/Jay Lancey/OneDrive/Desktop/Jessica/Jesidela/jesidela-site/images/logo.png" 
+                 onerror="this.src='https://www.saforestadventures.co.za/application/files/9114/6174/3228/logo.png'" 
+                 class="h-64 w-auto mb-10 object-contain drop-shadow-[0_0_25px_rgba(255,255,255,0.1)]">
             
-            <div class="mb-8 relative h-20 w-full overflow-hidden border-b border-slate-100">
-                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-300 -translate-y-1/2"></div>
-                <img src="images/favicon.png" class="h-16 w-auto zipline-anim">
+            <div id="login-card" class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-sm border-b-8 border-saf-orange pulse-orange">
+                <h2 class="font-black uppercase tracking-[0.3em] text-slate-400 text-[10px] mb-6 italic">Shadow Test Environment</h2>
+                <input type="password" id="pin-input" maxlength="4" class="w-full text-5xl text-center border-2 border-slate-100 rounded-2xl p-4 mb-6 font-mono outline-none text-slate-900 focus:border-saf-green transition-all" placeholder="****" autofocus>
+                <button onclick="checkPasscode()" class="w-full bg-saf-green text-white font-black py-6 rounded-2xl uppercase tracking-widest active:scale-95 transition-all shadow-lg hover:brightness-110">Unlock System</button>
             </div>
-            <h2 class="text-3xl font-black uppercase text-slate-900 mb-2 italic">Restricted<br>Access</h2>
-            <p class="text-[10px] text-slate-500 mb-8 font-mono tracking-widest">AUTHORIZED PERSONNEL ONLY</p>
-            <input type="password" id="access-code" placeholder="ENTER PASSCODE" class="w-full bg-slate-100 border-2 border-slate-200 p-4 rounded-xl text-center font-bold mb-4 focus:border-saf-orange outline-none uppercase tracking-widest transition-all">
-            <button onclick="verifyAccess()" class="w-full bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-saf-orange transition-colors uppercase tracking-widest text-sm">Authenticate</button>
-            <p id="error-msg" class="text-red-600 text-[10px] font-bold mt-4 hidden bg-red-50 py-2 rounded">ACCESS DENIED: INVALID CREDENTIALS</p>
         </div>
     </div>
 
-    <div class="bg-slate-900 text-white text-[9px] font-mono py-2 px-6 flex justify-between uppercase tracking-widest sticky top-0 z-40">
-        <span>Apex Systems: Booking Protocol [ACTIVE]</span>
-        <span class="text-green-500 italic">Secure Connection: saforestadventures.co.za</span>
+    <div id="vault-content" class="pb-20">
+        <div class="bg-black text-white text-[7px] font-mono py-1.5 px-6 flex justify-between uppercase tracking-widest border-b border-zinc-800">
+            <span>Adaptive Safety Protocol [ACTIVE]</span>
+            <span class="text-saf-orange font-bold italic">Authenticated: Skelmos Root Access</span>
+        </div>
+
+        <header class="bg-white border-b-8 border-saf-green px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex flex-col items-center md:items-start">
+                <img src="C:/Users/Jay Lancey/OneDrive/Desktop/Jessica/Jesidela/jesidela-site/images/logo.png" 
+                     onerror="this.src='https://www.saforestadventures.co.za/application/files/9114/6174/3228/logo.png'" 
+                     class="h-28 w-auto object-contain">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-3 ml-1">Apex Performance v2.1</p>
+            </div>
+            <div class="hidden md:block">
+                <a href="https://play.google.com/store/apps/details?id=io.appbuild.saforest1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" class="h-14 hover:scale-105 transition-transform">
+                </a>
+            </div>
+            <div class="text-center md:text-right">
+                <h1 class="text-slate-900 text-3xl font-black italic uppercase tracking-tighter leading-none">Welcome, Clinton Lerm</h1>
+                <p class="text-saf-green text-[10px] font-black uppercase tracking-widest mt-2 italic">Strategic Operations Control</p>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto py-8 px-6">
+            <div id="safety-banner" class="mb-8 bg-red-100 border-l-8 border-red-600 p-6 rounded-2xl flex items-center gap-6 shadow-md">
+                <div class="bg-red-600 text-white rounded-full p-3 font-black text-xl leading-none italic">!</div>
+                <div>
+                    <h4 class="text-red-900 font-black uppercase italic leading-none text-xl">Safety Lockout Active</h4>
+                    <p class="text-red-700 font-bold text-xs uppercase mt-1 italic">High Winds Detected (>40km/h). Operations suspended.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8 mb-10 items-start">
+                <div class="w-full lg:w-1/3 space-y-4">
+                    <div class="bg-slate-900 p-6 rounded-3xl shadow-xl">
+                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2 italic">Regional Hub</label>
+                        <select id="loc-select" onchange="filterActivities()" class="w-full bg-white rounded-xl p-4 font-bold text-sm outline-none cursor-pointer text-slate-900 italic">
+                            <option value="ct">Cape Town (Silvermist)</option>
+                            <option value="her">Hermanus (Hemel-en-Aarde)</option>
+                            <option value="mb">Mossel Bay (K3 Zipline)</option>
+                            <option value="cal">Caledon (Hotel & Spa)</option>
+                        </select>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-3xl shadow-xl">
+                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2 italic">Activity</label>
+                        <select id="act-select" onchange="updatePrice()" class="w-full bg-white rounded-xl p-4 font-bold text-sm outline-none cursor-pointer text-slate-900 italic">
+                            <option value="1800" data-loc="ct,mb" data-weather="true">K3 Longest Zipline (R1800)</option>
+                            <option value="900" data-loc="ct,her" data-weather="false">Quad Bike Trails (R900)</option>
+                        </select>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-3xl shadow-xl">
+                        <label class="text-[10px] font-black text-slate-400 uppercase block mb-2 text-center italic">Diagnostic Control</label>
+                        <button onclick="toggleWind()" id="wind-toggle" class="w-full bg-saf-red text-white py-5 rounded-2xl text-[10px] font-black uppercase shadow-lg hover:brightness-110 transition-all">Simulate: High Wind Alert</button>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-2/3 bg-slate-900 p-8 rounded-[3rem] shadow-2xl text-white">
+                    <div class="flex justify-between items-center mb-6 px-2">
+                        <h3 class="font-black uppercase italic tracking-widest">December 2025</h3>
+                        <span class="text-saf-orange font-bold text-[9px] uppercase italic">Live Inventory</span>
+                    </div>
+                    <div class="calendar-grid text-white font-black uppercase text-[9px] mb-4 text-center opacity-40">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                    <div id="cal-grid" class="calendar-grid"></div>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto mb-12">
+                <div class="bg-white p-10 rounded-[4rem] shadow-2xl border border-slate-200">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="text-3xl font-black italic uppercase text-slate-800 italic leading-none">Guest Manifest</h3>
+                        <button onclick="addGuest()" class="bg-saf-green text-white text-[10px] px-6 py-2.5 rounded-full font-black uppercase italic">+ Add Guest</button>
+                    </div>
+                    <div id="guest-list" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-6 rounded-[2.5rem] border border-slate-100">
+                            <input type="text" placeholder="Guest Name" class="bg-white p-4 rounded-2xl text-sm font-bold border border-slate-200 outline-none italic text-slate-900">
+                            <input type="number" oninput="checkLogic()" placeholder="Weight (kg)" class="guest-weight bg-white p-4 rounded-2xl text-sm font-bold border border-slate-200 outline-none italic text-slate-900">
+                            <div class="flex items-center gap-3 px-2">
+                                <input type="checkbox" onchange="checkLogic()" class="waiver-chk w-6 h-6 accent-saf-green cursor-pointer">
+                                <label class="text-[10px] font-black text-slate-500 uppercase italic">Accept Waiver</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div id="payment-card" class="bg-slate-900 p-12 rounded-[5rem] text-white shadow-2xl relative overflow-hidden transition-all duration-500">
+                    <div class="flex justify-between items-center mb-8 border-b border-zinc-800 pb-6">
+                        <div class="flex flex-col">
+                            <span id="logic-status" class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-2 italic">Error: Safety Lockout</span>
+                            <h4 id="display-act" class="text-5xl font-black italic uppercase tracking-tighter leading-none italic">Zipline</h4>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[9px] text-slate-500 font-black italic uppercase">Total Rate</span>
+                            <p id="total-val" class="text-3xl font-black italic">R 1,800.00</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-saf-orange font-black uppercase text-[11px] tracking-[0.3em] italic mb-4 block">50% Commitment Deposit</span>
+                        <h2 id="deposit-val" class="text-8xl font-black tracking-tighter mb-10 italic">R 900.00</h2>
+                        <button id="secure-btn" onclick="executeApex()" disabled class="w-full bg-slate-800 text-slate-500 font-black py-8 rounded-[2.5rem] text-2xl uppercase italic shadow-2xl cursor-not-allowed">Secure Slot</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-
-    <header class="bg-white border-b border-slate-200 sticky top-8 z-30 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <img src="images/logo.png" alt="SA Forest Adventures" class="h-16 md:h-20 object-contain">
-            <div class="text-right hidden md:block">
-                <a href="mailto:bookings@saforestadventures.co.za" class="text-xs font-bold text-slate-900 hover:text-saf-orange transition">bookings@saforestadventures.co.za</a>
-                <p class="text-[10px] text-slate-500 font-mono mt-1">021 795 0225</p>
-            </div>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto py-12 px-6 space-y-16">
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-7 space-y-8">
-                <div class="hero-zoom h-80 rounded-[2.5rem] shadow-2xl flex items-end p-10 border-b-8 border-saf-orange relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <span class="bg-saf-orange text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest mb-2 inline-block">Most Popular</span>
-                        <h2 id="act-title" class="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Black Water Tubing</h2>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors group">
-                        <div class="flex items-center gap-3 mb-3"><i data-lucide="map-pin" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Caledon</h4></div>
-                        <p class="text-xs text-slate-500 leading-relaxed">(100 km from Cape Town 1 hour drive)<br>Adventure Farm situated on the N2, entrance at the <strong class="text-slate-800">Caledon Casino</strong>.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3"><i data-lucide="waves" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Kleinmond</h4></div>
-                        <p class="text-xs text-slate-500 leading-relaxed">(100 km from Cape town)<br>Adventure Farm situated in the <strong class="text-slate-800">Kogelberg Nature Reserve</strong> at Kleinmond on the R45.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3"><i data-lucide="mountain" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Cape Town</h4></div>
-                        <p class="text-xs text-slate-500 leading-relaxed"><strong class="text-slate-800">Silvermist Estate</strong> – Houtbay Road.<br>021 7950 225. Central mountain ziplining.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:border-saf-green transition-colors">
-                        <div class="flex items-center gap-3 mb-3"><i data-lucide="compass" class="w-5 h-5 text-saf-green"></i><h4 class="font-black text-sm uppercase text-slate-800">Hermanus</h4></div>
-                        <p class="text-xs text-slate-500 leading-relaxed">(121km from Cape Town)<br>Adventure Farm situated on the <strong class="text-slate-800">Hemel & Aarde road R320</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5">
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 sticky top-32">
-                    <h3 class="text-xl font-black uppercase italic mb-6 text-slate-800 flex items-center gap-2"><span class="w-2 h-8 bg-saf-orange block"></span> Build Your Adventure</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Choose Activity</label>
-                            <div class="flex gap-2">
-                                <div class="relative w-full">
-                                    <select id="act-select" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl p-4 font-bold text-slate-800 appearance-none focus:border-saf-green outline-none transition-colors text-sm h-full">
-                                        <option value="1050">Ziplining (Cape Town) - R1050</option>
-                                        <option value="900">Quad Biking (Hermanus/Botriver) - R900</option>
-                                        <option value="450">Quad Biking (Child U16) - R450</option>
-                                        <option value="430">Wine Blending - R430</option>
-                                        <option value="200">Paintball (Hermanus) - R200</option>
-                                        <option value="150">Target Shooting - R150</option>
-                                        <option value="550">Black Water Tubing - R550</option>
-                                        <option value="1800">K3 Zipline (World's Longest) - R1800</option>
-                                    </select>
-                                    <i data-lucide="chevron-down" class="absolute right-4 top-4 w-5 h-5 text-slate-400 pointer-events-none"></i>
-                                </div>
-                                <button onclick="addToBooking()" class="bg-slate-900 text-white p-4 rounded-xl hover:bg-saf-orange transition-colors"><i data-lucide="plus" class="w-5 h-5"></i></button>
-                            </div>
-                        </div>
-                        <div id="cart-container" class="bg-slate-50 rounded-xl p-4 border border-slate-100 hidden">
-                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2">Current Selections</h4>
-                            <div id="cart-list" class="space-y-2 max-h-40 overflow-y-auto"></div>
-                        </div>
-                        <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
-                            <div class="relative z-10">
-                                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-4"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Value</span><span id="total-val" class="text-xl font-bold">R 0</span></div>
-                                <div class="flex justify-between items-end">
-                                    <div><span class="text-xs font-black text-saf-orange uppercase italic tracking-widest block mb-1">50% Deposit</span><span class="text-[9px] text-slate-400 font-mono">Secure your slots now</span></div>
-                                    <span id="deposit-val" class="text-4xl font-black text-white tracking-tighter">R 0.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button onclick="executeApex()" id="book-btn" class="group w-full bg-saf-green hover:bg-green-800 text-white font-black py-5 rounded-2xl shadow-lg transition-all active:scale-95 text-xl uppercase italic tracking-widest flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"><span>Proceed</span><i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i></button>
-                        <div id="success-panel" class="p-6 bg-green-50 border-2 border-dashed border-green-200 rounded-2xl text-center animate-pulse">
-                            <p class="text-saf-green font-black uppercase text-sm mb-1 tracking-widest italic">✓ Slots Reserved</p>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase">Redirecting to Payment Gateway...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
-            <div class="bg-slate-900 p-8 flex justify-between items-center">
-                <div><span class="text-saf-orange font-mono text-[10px] uppercase tracking-widest">Loyalty Systems Overview</span><h2 class="text-3xl font-black text-white italic uppercase mt-1">Adventure Awaits!</h2></div>
-                <div class="hidden md:block"><div class="bg-white/10 px-4 py-2 rounded-lg text-white text-xs font-bold font-mono">USER: GUEST_01</div></div>
-            </div>
-            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="md:col-span-2 space-y-6">
-                    <div class="flex justify-between items-end"><h4 class="font-black text-slate-800 uppercase text-lg">Your Current Progress</h4><span class="text-saf-green font-bold text-sm">123 Points</span></div>
-                    <div class="h-8 bg-slate-100 rounded-full overflow-hidden relative border border-slate-200">
-                        <div class="absolute inset-0 flex items-center justify-between px-6 text-[10px] font-bold text-slate-400 z-10 pointer-events-none"><span>0</span><span>100</span><span>300</span><span>500</span></div>
-                        <div class="h-full bg-gradient-to-r from-saf-orange to-red-500 w-[25%] relative z-0"></div>
-                    </div>
-                    <p class="text-xs text-slate-500">Reach <strong class="text-slate-900">300 Points</strong> to unlock Level 2 rewards.</p>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100"><span class="block text-2xl font-black text-slate-800">4</span><span class="text-[9px] text-slate-500 uppercase font-bold">Ways to earn</span></div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-100"><span class="block text-2xl font-black text-slate-800">3</span><span class="text-[9px] text-slate-500 uppercase font-bold">Levels</span></div>
-                </div>
-            </div>
-            <div class="border-t border-slate-100 p-8 bg-slate-50">
-                <h4 class="font-black text-slate-400 uppercase text-xs mb-4 tracking-widest">Recent Loyalty History</h4>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
-                        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i data-lucide="check" class="w-4 h-4"></i></div><span class="text-xs font-bold text-slate-700">Booking: Quad Biking</span></div>
-                        <span class="text-xs font-mono text-saf-green font-bold">+100 PTS</span>
-                    </div>
-                    <div class="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200">
-                        <div class="flex items-center gap-3"><div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i data-lucide="star" class="w-4 h-4"></i></div><span class="text-xs font-bold text-slate-700">Level Bonus</span></div>
-                        <span class="text-xs font-mono text-saf-green font-bold">+23 PTS</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="bg-white rounded-3xl p-8 border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
-                <h4 class="font-black text-slate-900 uppercase mb-4">Contact Details</h4>
-                <div class="space-y-2 text-xs font-medium text-slate-600">
-                    <p class="font-bold">021 795 0225</p>
-                    <p class="font-bold">079 495 3987</p>
-                    <a href="mailto:bookings@saforestadventures.co.za" class="text-saf-orange hover:underline block mt-2">bookings@saforestadventures.co.za</a>
-                </div>
-            </div>
-            <div>
-                <h4 class="font-black text-slate-900 uppercase mb-4">Office Hours</h4>
-                <div class="space-y-2 text-xs font-medium text-slate-600">
-                    <p>9:00 till 17:00</p>
-                    <p class="text-[10px] text-slate-400 mt-2 italic">For bookings please use our online booking system.</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-center md:items-end justify-center">
-                <img src="images/logo.png" class="h-12 opacity-80 mb-2">
-                <span class="text-[9px] text-slate-400 font-mono uppercase">© SA Forest Adventures 2025</span>
-                <span class="text-[8px] text-saf-green font-black uppercase mt-2 tracking-widest border-t border-slate-200 pt-2">Powered by The SKELMOS&trade; Collective</span>
-            </div>
-        </footer>
-
-    </main>
 
     <script>
-        lucide.createIcons();
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) { if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false; };
-
-        function verifyAccess() {
-            const code = document.getElementById('access-code').value;
-            if (code === "FOREST2025") { document.getElementById('login-overlay').style.display = 'none'; } 
-            else { document.getElementById('error-msg').classList.remove('hidden'); document.getElementById('access-code').value = ''; document.getElementById('access-code').focus(); }
-        }
-
-        let cartItems = [];
-        let totalValue = 0;
-
-        function addToBooking() {
-            const select = document.getElementById('act-select');
-            const price = parseInt(select.value);
-            const text = select.options[select.selectedIndex].text.split(' - ')[0];
-            cartItems.push({ name: text, price: price });
-            renderCart(); updateTotals();
-            document.getElementById('act-title').innerText = text;
-        }
-
-        function removeFromCart(index) {
-            cartItems.splice(index, 1);
-            renderCart(); updateTotals();
-        }
-
-        function renderCart() {
-            const list = document.getElementById('cart-list');
-            const container = document.getElementById('cart-container');
-            if (cartItems.length > 0) { container.classList.remove('hidden'); } else { container.classList.add('hidden'); }
-            list.innerHTML = '';
-            cartItems.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'cart-item flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200 text-sm';
-                div.innerHTML = `<div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-saf-orange"></div><span class="font-bold text-slate-700">${item.name}</span></div><div class="flex items-center gap-3"><span class="font-mono text-xs font-bold text-slate-500">R${item.price}</span><button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600"><i data-lucide="x" class="w-4 h-4"></i></button></div>`;
-                list.appendChild(div);
-            });
-            lucide.createIcons();
-        }
-
-        function updateTotals() {
-            totalValue = cartItems.reduce((sum, item) => sum + item.price, 0);
-            const deposit = totalValue / 2;
-            document.getElementById('total-val').innerText = "R " + totalValue.toLocaleString();
-            document.getElementById('deposit-val').innerText = "R " + deposit.toLocaleString();
-            const btn = document.getElementById('book-btn');
-            if (totalValue > 0) { btn.classList.remove('opacity-50', 'cursor-not-allowed'); btn.removeAttribute('disabled'); } 
-            else { btn.classList.add('opacity-50', 'cursor-not-allowed'); btn.setAttribute('disabled', 'true'); }
-        }
-
-        function executeApex() {
-            if (totalValue === 0) return;
-            const btn = document.getElementById('book-btn');
-            btn.innerHTML = `<span class="animate-pulse">VERIFYING...</span>`;
-            setTimeout(() => { btn.style.display = "none"; document.getElementById('success-panel').style.display = "block"; }, 1000);
-        }
+        let isWindy = true; let selectedDay = 28; const secretKey = "2026";
+        function checkPasscode() { if (document.getElementById('pin-input').value === secretKey) { document.getElementById('pin-screen').style.display = 'none'; document.getElementById('vault-content').style.display = 'block'; filterActivities(); } else { document.getElementById('login-card').classList.add('shake'); setTimeout(() => document.getElementById('login-card').classList.remove('shake'), 400); } }
+        function toggleWind() { isWindy = !isWindy; const btn = document.getElementById('wind-toggle'); btn.innerText = isWindy ? "Simulate: High Wind Alert" : "Simulate: Clear Skies (Optimal)"; btn.className = isWindy ? "w-full bg-saf-red text-white py-5 rounded-2xl text-[10px] font-black uppercase shadow-lg" : "w-full bg-emerald-600 text-white py-5 rounded-2xl text-[10px] font-black uppercase shadow-lg"; renderCalendar(); }
+        function filterActivities() { const loc = document.getElementById('loc-select').value; const options = document.getElementById('act-select').options; let first = -1; for (let i = 0; i < options.length; i++) { const visible = options[i].getAttribute('data-loc').includes(loc); options[i].hidden = !visible; if (visible && first === -1) first = i; } if (first !== -1) document.getElementById('act-select').selectedIndex = first; renderCalendar(); }
+        function renderCalendar() { const grid = document.getElementById('cal-grid'); grid.innerHTML = ''; const today = 28; const act = document.getElementById('act-select'); const requiresWeather = act.options[act.selectedIndex].getAttribute('data-weather') === 'true'; for (let i = 1; i <= 31; i++) { const day = document.createElement('div'); const isWindyDay = requiresWeather && isWindy && [27, 28, 31].includes(i); day.className = `day-card ${i === selectedDay ? 'cal-active' : ''} ${i < today ? 'cal-disabled' : ''}`; day.innerHTML = `<span>${i}</span><span class="weather-status ${isWindyDay ? 'text-danger' : 'text-safe'}">${i < today ? '' : (isWindyDay ? '● Windy' : '● Clear')}</span>`; if (i >= today) day.onclick = () => { selectedDay = i; renderCalendar(); }; grid.appendChild(day); } checkLogic(); }
+        function addGuest() { const list = document.getElementById('guest-list'); const guest = document.createElement('div'); guest.className = "grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-slate-50 p-6 rounded-[2.5rem] border border-slate-100"; guest.innerHTML = `<input type="text" placeholder="Guest Name" class="bg-white p-4 rounded-2xl text-sm font-bold border border-slate-200 outline-none italic text-slate-900"><input type="number" oninput="checkLogic()" placeholder="Weight (kg)" class="guest-weight bg-white p-4 rounded-2xl text-sm font-bold border border-slate-200 outline-none italic text-slate-900"><div class="flex items-center gap-3 px-2"><input type="checkbox" onchange="checkLogic()" class="waiver-chk w-6 h-6 accent-saf-green cursor-pointer"><label class="text-[10px] font-black text-slate-500 uppercase italic">Accept Waiver</label></div>`; list.appendChild(guest); updatePrice(); }
+        function checkLogic() { const weights = Array.from(document.querySelectorAll('.guest-weight')).map(i => parseInt(i.value) || 0); const waivers = Array.from(document.querySelectorAll('.waiver-chk')).map(i => i.checked); const act = document.getElementById('act-select').options[document.getElementById('act-select').selectedIndex]; const isWindySelected = act.getAttribute('data-weather') === 'true' && isWindy && [27, 28, 31].includes(selectedDay); document.getElementById('safety-banner').style.display = isWindySelected ? 'flex' : 'none'; const btn = document.getElementById('secure-btn'); const status = document.getElementById('logic-status'); let weightErr = act.text.includes("Zipline") && weights.some(w => w > 120); let waiverErr = waivers.some(w => !w); if (!isWindySelected && !weightErr && !waiverErr) { btn.disabled = false; btn.className = "w-full bg-saf-orange text-white font-black py-8 rounded-[2.5rem] text-2xl uppercase italic shadow-2xl active:scale-95"; status.innerText = "Protocol Ready: System Clear"; status.className = "text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2 italic"; } else { btn.disabled = true; btn.className = "w-full bg-slate-800 text-slate-500 font-black py-8 rounded-[2.5rem] text-2xl uppercase italic shadow-2xl cursor-not-allowed"; status.className = "text-[10px] font-black text-red-500 uppercase tracking-widest mb-2 italic"; if (isWindySelected) status.innerText = "Error: High Wind Protocol"; else if (weightErr) status.innerText = "Error: Weight Limit Exceeded"; else status.innerText = "Waiting: Waiver Required"; } updatePrice(); }
+        function updatePrice() { const act = document.getElementById('act-select'); const guests = document.querySelectorAll('.guest-weight').length; const total = parseInt(act.value) * (guests || 1); document.getElementById('display-act').innerText = act.options[act.selectedIndex].text.split(' (')[0]; document.getElementById('total-val').innerText = "R " + total.toLocaleString() + ".00"; document.getElementById('deposit-val').innerText = "R " + (total / 2).toLocaleString() + ".00"; }
+        function executeApex() { alert("Shadow Test Complete: Booking Logic Verified."); }
     </script>
 </body>
 </html>

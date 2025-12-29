@@ -234,7 +234,7 @@
         lucide.createIcons();
         AOS.init({ duration: 1000, once: true, offset: 50 });
 
-        // --- HACKER TEXT SCRIPT (Auto Run Every 16s to ensure 8s pause) ---
+        // --- HACKER TEXT SCRIPT ---
         const element = document.querySelector(".hacker-text");
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=[]{}|;':,./<>?ΘΞΔΣΠΨΩ";
         const originalText = element.dataset.value;
@@ -254,7 +254,7 @@
                         return letters[Math.floor(Math.random() * letters.length)];
                     })
                     .join("");
-                
+            
                 if(iteration >= originalText.length){ 
                     clearInterval(element.interval);
                 }
